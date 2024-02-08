@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class User(models.Model):
@@ -13,6 +14,9 @@ class User(models.Model):
     group = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.pk
+
 
 class ItemCard(models.Model):
     name = models.CharField(max_length=255)
@@ -21,6 +25,9 @@ class ItemCard(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     resp_user = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     status = models.BooleanField(default=True)
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_id': self.pk})
 
 
 class Item(models.Model):
