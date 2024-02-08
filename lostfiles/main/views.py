@@ -3,7 +3,26 @@ from django.http import HttpResponse, HttpResponseNotFound
 
 
 def index(request):  # HttpRequest
-    return render(request, 'main/index.html')
+    context = {
+
+    }
+    return render(request, 'main/index.html', context=context)
+
+
+def addpage(request): # HttpRequest
+    return HttpResponse(request, "Добавление карточки")
+
+
+def contact(request):
+    return HttpResponse(request, "Обратная связь")
+
+
+def login(request):
+    return HttpResponse(request, "Авторизация")
+
+
+def show_post(request, post_id):
+    return HttpResponse(f"Отображение карточки с id = {post_id}")
 
 
 def pageNotFound(request, exception):
