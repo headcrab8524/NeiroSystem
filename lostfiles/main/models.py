@@ -17,6 +17,11 @@ class User(models.Model):
     def __str__(self):
         return self.pk
 
+    class Meta:
+        verbose_name = 'Пользователи'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['id']
+
 
 class ItemCard(models.Model):
     name = models.CharField(max_length=255)
@@ -28,6 +33,11 @@ class ItemCard(models.Model):
 
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Карточки предметов'
+        verbose_name_plural = 'Карточки предметов'
+        ordering = ['time_create']
 
 
 class Item(models.Model):
