@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
+from .models import *
 
 
 def index(request):  # HttpRequest
-    context = {
-
-    }
-    return render(request, 'main/index.html', context=context)
+    cards = ItemCard.objects.all()
+    return render(request, 'main/index.html', { 'cards' :cards })
 
 
 def addpage(request): # HttpRequest

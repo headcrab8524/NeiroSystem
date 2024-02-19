@@ -1,4 +1,5 @@
 {% load static %}
+{% load main_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,9 @@
 {% include 'main/header.html' %}
 <body>
 {% block content %}
+
+{% get_class %}
+
 {% endblock content %}
 </body>
 

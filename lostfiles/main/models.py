@@ -4,10 +4,9 @@ from django.urls import reverse
 
 class User(models.Model):
     first_name = models.CharField(max_length=255)
-    middle_name = models.CharField(max_length=255)
+    middle_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to="photos/")
-    #photo = models.CharField(max_length=255)
+    photo = models.ImageField(upload_to="photos/", null=True, blank=True)
     login = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True)
@@ -26,7 +25,8 @@ class User(models.Model):
 class ItemCard(models.Model):
     name = models.CharField(max_length=255)
     item_class = models.ForeignKey('Class', on_delete=models.SET_NULL, null=True)
-    comment = models.ForeignKey('Comment', on_delete=models.SET_NULL, null=True)
+    content = models.TextField(blank=True)
+    comment = models.ForeignKey('Comment', on_delete=models.SET_NULL, null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     resp_user = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     status = models.BooleanField(default=True)
@@ -44,7 +44,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255)
     time_found = models.DateTimeField()
     place_found = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to="photos/")
+    photo = models.ImageField(upload_to="photos/", blank=True)
     item_class = models.ForeignKey('Class', on_delete=models.SET_NULL, null=True)
 
 
@@ -65,3 +65,4 @@ class Role(models.Model):
 
 class Class(models.Model):
     name = models.CharField(max_length=255)
+    rus_name = models.CharField(max_length=255)

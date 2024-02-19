@@ -1,6 +1,26 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+<section class="card-list ms-5 ps-3 pb-5 d-flex flex-wrap justify-content-start">
+    <ul class="list-articles">
+        {% for с in cards %}
+        <li><div class="article-panel">
 
-TODO Написать контент для индекса
+            <p class="last">Дата: {{c.time_update|date:"d-m-Y H:i:s"}}</p>
+        </div>
+
+            {% if c.photo %}
+            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+            {% endif %}
+
+            <h2>{{c.title}}</h2>
+            {% autoescape on %}
+            {{c.content|linebreaks|truncatewords:50}}
+            {% endautoescape %}
+            <div class="clear"></div>
+            <p class="link-read-post"><a href='#'>Читать пост</a></p>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
 {% endblock content %}
