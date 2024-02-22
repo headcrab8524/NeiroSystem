@@ -6,7 +6,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=255)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to="photos/", null=True, blank=True)
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", null=True, blank=True)
     login = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True)
@@ -44,7 +44,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255)
     time_found = models.DateTimeField()
     place_found = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to="photos/", blank=True)
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", blank=True)
     item_class = models.ForeignKey('Class', on_delete=models.SET_NULL, null=True)
 
 
