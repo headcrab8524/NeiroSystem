@@ -24,6 +24,7 @@ class User(models.Model):
 
 class ItemCard(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     item_class = models.ForeignKey('Class', on_delete=models.SET_NULL, null=True)
     content = models.TextField(blank=True)
     comment = models.ForeignKey('Comment', on_delete=models.SET_NULL, null=True, blank=True)
@@ -32,7 +33,7 @@ class ItemCard(models.Model):
     status = models.BooleanField(default=True)
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'post_id': self.pk})
+        return reverse('card', kwargs={'card_slug': self.slug})
 
     class Meta:
         verbose_name = 'Карточки предметов'
@@ -65,4 +66,5 @@ class Role(models.Model):
 
 class Class(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     rus_name = models.CharField(max_length=255)

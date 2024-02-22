@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>{{ ItemCard.name }}</h1>
+
+{% if card.photo %}
+    <p><img class="img-article-left thumb" src="{{card.photo.url}}"></p>
+{% endif %}
+
+{{card.content|linebreaks}}
+
+{% endblock %}
