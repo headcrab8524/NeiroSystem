@@ -1,21 +1,31 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<section class="card-list ms-5 ps-3 pb-5 d-flex flex-wrap justify-content-start">
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+    <tr>
+        <!-- Sidebar слева -->
+        <td valign="top" class="left-chapters">
+            <ul id="leftchapters">
+
+            </ul>
+        </td>
+    </tr>
+</table>
+<section class="card-list ms-5 ps-3 pb-5 d-flex flex-wrap justify-content-start h-75">
     <ul class="list-articles">
-        {% for с in cards %}
+        {% for card in cards %}
         <li><div class="article-panel">
 
-            <p class="last">Дата: {{c.time_update|date:"d-m-Y H:i:s"}}</p>
+            <p class="last">Дата: {{card.time_create}}</p>
         </div>
 
-            {% if c.photo %}
-            <p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+            {% if card.photo %}
+            <p><img class="img-article-left thumb" src="{{card.photo.url}}"></p>
             {% endif %}
 
-            <h2>{{c.title}}</h2>
+            <h2>{{card.title}}</h2>
             {% autoescape on %}
-            {{c.content|linebreaks|truncatewords:50}}
+            {{card.content|linebreaks|truncatewords:50}}
             {% endautoescape %}
             <div class="clear"></div>
             <p class="link-read-post"><a href='#'>Читать пост</a></p>
