@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from .models import *
+from .forms import *
 
 menu = [
     {'title': "Войти", 'url_name': 'login'}
@@ -13,7 +14,18 @@ def index(request):  # HttpRequest
 
 
 def addpage(request): # HttpRequest
-    return HttpResponse(request, "Добавление карточки")
+    if request.method == 'POST':
+        form = AddCardForm(request.POST)
+        if form.is_valid():
+            #print(form.cleaned_data)
+            try:
+                ItemCard.objects.create(**form.cleaned_data)
+                return redirect('main')
+            except:
+                form.add_error(None, "Ошибка добавления записи")
+    else:
+        form = AddCardForm()
+    return render(request, 'main/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление карточки'})
 
 
 def contact(request):
