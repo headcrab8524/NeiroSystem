@@ -77,13 +77,20 @@ ul.list-articles li {
   display: block;
   color: white;
   font-weight: 600;
-  width: 48%;
+  width: 45%;
   height: 20rem;
   overflow: hidden;
   background: rgba(50, 50, 50, 0.6);
   border: 1px solid rgba(50, 50, 50, 0.125) !important;
   border-bottom-width: 1rem !important;
 }
+
+@media screen and (max-width: 992px) {
+  .card-list .card {
+    width: 90%;
+  }
+}
+
 
 div.button {
 	background: #3F4137;
@@ -96,6 +103,7 @@ div.button {
 
 .table-content {
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .content {
@@ -127,4 +135,18 @@ div.button {
 	padding: 20px 10px 10px 20px;
 	list-style: none;
 	font-size: 20px;
+}
+
+.dropdown{
+    margin-left: 10px
+}
+
+header {
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+}
+
+.fake_header_container{
+    height: 90px;
 }

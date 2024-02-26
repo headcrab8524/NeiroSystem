@@ -10,7 +10,8 @@ menu = [
 
 def index(request):  # HttpRequest
     cards = ItemCard.objects.all()
-    return render(request, 'main/index.html', { 'cards' :cards })
+    itemclass = Class.object.all()
+    return render(request, 'main/index.html', { 'cards' :cards, 'itemclass': itemclass })
 
 
 def addpage(request): # HttpRequest
