@@ -3,16 +3,22 @@
 {% block content %}
 <table class="table-content" border=0 cellpadding="0" cellspacing="0">
     <tr>
-        <!-- Sidebar слева -->
-        <td valign="top" class="left-chapters">
-            <ul id="leftchapters">
-
-            </ul>
+        <td valign="left" class="left-chapters">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Кнопка выпадающего списка
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Действие</a></li>
+                    <li><a class="dropdown-item" href="#">Другое действие</a></li>
+                    <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                </ul>
+            </div>
         </td>
     </tr>
 </table>
-<section class="card-list ms-5 ps-3 pb-5 d-flex flex-wrap justify-content-start h-75">
-    <ul class="list-articles">
+<section class="card-list ms-5 ps-3 pb-5 d-flex flex-wrap justify-content-start">
+    <ul class="card">
         {% for card in cards %}
         <li><div class="article-panel">
 
@@ -23,12 +29,12 @@
             <p><img class="img-article-left thumb" src="{{card.photo.url}}"></p>
             {% endif %}
 
-            <h2>{{card.title}}</h2>
+            <h5>{{card.name}}</h5>
             {% autoescape on %}
-            {{card.content|linebreaks|truncatewords:50}}
+            {{card.content|linebreaks|truncatewords:20}}
             {% endautoescape %}
             <div class="clear"></div>
-            <p class="link-read-post"><a href='#'>Читать пост</a></p>
+            <p class="link-read-post"><a class="text-white float-right" href='#'>Читать пост</a></p>
         </li>
         {% endfor %}
     </ul>

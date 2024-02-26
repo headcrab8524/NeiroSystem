@@ -36,11 +36,11 @@ img.img-article-left.thumb {
 }
 
 div.article-panel {
-    background: #eee;
+    background: rgba(50, 50, 50, 0.6);
     padding: 5px 10px 5px 10px;
     box-sizing border-box;
     overflow: hidden;
-    color: #555;
+    color: white;
 }
 div.article-panel p.first {
     margin: 0;
@@ -48,7 +48,7 @@ div.article-panel p.first {
 }
 div.article-panel p.last {
     margin: 0;
-    float: right;
+    float: left;
 }
 
 ul.list-articles {
@@ -60,6 +60,10 @@ ul.list-articles li {
 	border-bottom: 1px solid #ccc;
 }
 
+.link-read-post {
+    color: white;
+}
+
 .table-page {
 	width: 100%;
 	height: 100%;
@@ -69,11 +73,17 @@ ul.list-articles li {
 
 .clear {clear: both;}
 
-.header {
-	background: #3F4137;
-	height: 60px;
+.card-list .card {
+  display: block;
+  color: white;
+  font-weight: 600;
+  width: 48%;
+  height: 20rem;
+  overflow: hidden;
+  background: rgba(50, 50, 50, 0.6);
+  border: 1px solid rgba(50, 50, 50, 0.125) !important;
+  border-bottom-width: 1rem !important;
 }
-
 
 div.button {
 	background: #3F4137;
@@ -86,8 +96,6 @@ div.button {
 
 .table-content {
 	width: 100%;
-	min-height: 100%;
-	height: 100%;
 }
 
 .content {
@@ -106,50 +114,17 @@ div.button {
 
 .table-content {
 	width: 100%;
-	min-height: 100%;
-	height: 100%;
 }
 
 .left-chapters {
 	margin: 0;
 	background: #eee;
 	border-right: 1px solid #ccc;
-	min-height: 100%;
 }
 .left-chapters ul {
 	width: 230px;
-	min-height: 100%;
 	margin: 0;
 	padding: 20px 10px 10px 20px;
 	list-style: none;
 	font-size: 20px;
-}
-.left-chapters ul li {
-	margin: 30px 0 0 0;
-	color: #999;
-}
-.left-chapters ul li.selected {color: #0059b2; }
-.left-chapters ul li a {
-	color: #444;
-	text-decoration: none;
-}
-.left-chapters ul li a:hover { color: #CC0000; }
-.left-chapters ul li.share {margin: 60px 0 0 0;}
-.left-chapters ul li.share p {margin: 30px 0 30px 0;}
-.left-chapters ul li.share a {
-	display: inline-block;
-	width: 40px;
-	height: 40px;
-	margin: 0 20px 0 0;
-}
-
-#footer {
-	box-sizing: border-box;
-	background: #3F4137;
-	padding: 5px;
-	color: #aaa;
-	font-size: 14px;
-	font-family: Verdana, Geneva, Arial, Helvetica;
-	text-align: left;
-	overflow: hidden;
 }
