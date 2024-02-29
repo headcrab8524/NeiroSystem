@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 from .models import *
 from .forms import *
 
@@ -8,25 +10,32 @@ menu = [
 ]
 
 
-def index(request):  # HttpRequest
-    cards = ItemCard.objects.all()
-    itemclass = Class.object.all()
-    return render(request, 'main/index.html', { 'cards' :cards, 'itemclass': itemclass })
+class MainHome(ListView):
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+    #allow_empty = False
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = "Главная страница"
+        return context
+
+    def get_queryset(self):
+        return ItemCard.objects.filter(status=True)
 
 
-def addpage(request): # HttpRequest
-    if request.method == 'POST':
-        form = AddCardForm(request.POST)
-        if form.is_valid():
-            #print(form.cleaned_data)
-            try:
-                ItemCard.objects.create(**form.cleaned_data)
-                return redirect('main')
-            except:
-                form.add_error(None, "Ошибка добавления записи")
-    else:
-        form = AddCardForm()
-    return render(request, 'main/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление карточки'})
+class AddPage(CreateView):
+    form_class = AddCardForm
+    template_name = 'main/addpage.html'
+    success_url = reverse_lazy('main')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = "Добавление карточки"
+        return context
 
 
 def contact(request):
@@ -37,17 +46,17 @@ def login(request):
     return HttpResponse(request, "Авторизация")
 
 
-def show_card(request, card_slug):
-    card = get_object_or_404(ItemCard, slug=card_slug)
+class ShowCard(DetailView):
+    model = ItemCard
+    template_name = 'main/card.html'
+    slug_url_kwarg = 'card_slug'
+    context_object_name = 'card'
 
-    context = {
-        'card': card,
-        'menu': menu,
-        'title': ItemCard.name,
-        'class_selected': card.item_class,
-    }
-
-    return render(request, 'main/card.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        #context['title'] = context['card']
+        return context
 
 
 def pageNotFound(request, exception):
