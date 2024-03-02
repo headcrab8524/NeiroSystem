@@ -1,12 +1,48 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1>{{ ItemCard.name }}</h1>
-
+<div class="container d-flex flex-column">
+<h1 class="text-center">{{ card.name }}</h1>
+    <hr class="line"> </hr>
 {% if card.photo %}
-    <p><img class="img-article-left thumb" src="{{card.photo.url}}"></p>
+    <p class="d-block mx-auto"><img src="{{card.photo.url}}"></p>
 {% endif %}
+    <hr class="line"> </hr>
+    <p>Был найден в {{card.place_found}} {{card.time_found}}</p>
+<p>Описание : {{card.content|linebreaks}}</p>
+    <hr class="line"> </hr>
+    <p>В данный момент:
+        {% if card.status %}
+        Находится в корпусе
+        {% else %}
+        Возращен
+        {% endif %}
+    </p>
+    <hr class="line"> </hr>
+    <button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button>
 
-{{card.content|linebreaks}}
+    <button type="button" class="btn btn-outline-secondary"> Добавить комментарий</button>
+    {% if comment.count > 0 %}
+    {% for com in comment %}
+    <article class="border border-secondary rounded p-2 mt-3" style="background: rgb(30, 30, 30);">
+        <a href="{{ com.user.login }}"
+           class="d-flex align-items-center link-light text-decoration-none mb-3">
+            <div class="profile-photo-comment-2 rounded-circle me-3"
+                 style="background-image: {{com.user.photo.url}};">
+            </div>
+            <div class="d-flex flex-column">
+                <div class="fs-4">{{ comment.user.username }}</div>
+                <div class="">{{ comment.time_create }}</div>
+            </div>
+        </a>
+
+        <p class="ps-2">{{ comment.text }}</p>
+    </article>
+    {% endfor %}
+    {% else %}
+    <p>Комментариев пока нет.</p>
+    {% endif %}
+</div>
+
 
 {% endblock %}

@@ -14,12 +14,14 @@ class MainHome(ListView):
     model = ItemCard
     template_name = 'main/index.html'
     context_object_name = 'cards'
-    #allow_empty = False
+
+    # allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = menu
         context['title'] = "Главная страница"
+        context['itemclass'] = Class.objects.all()
         return context
 
     def get_queryset(self):
@@ -55,7 +57,8 @@ class ShowCard(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['menu'] = menu
-        #context['title'] = context['card']
+        context['comment'] = Comment.objects.filter = [context['card'].pk == 'item_card']
+        # context['title'] = context['card']
         return context
 
 

@@ -150,3 +150,9 @@ header {
 .fake_header_container{
     height: 90px;
 }
+
+.line{
+    height 5px;
+    width 100%;
+    background: rgba(50, 50, 50, 0.6);
+}
