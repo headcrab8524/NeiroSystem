@@ -2,15 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import *
-
-menu = [
-    {'title': "Войти", 'url_name': 'login'}
-]
+from .utils import *
 
 
-class MainHome(ListView):
+class MainHome(DataMixin, ListView):
     model = ItemCard
     template_name = 'main/index.html'
     context_object_name = 'cards'
@@ -19,25 +17,26 @@ class MainHome(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = "Главная страница"
+        c_def = self.get_user_context(title='Главная страница')
         context['itemclass'] = Class.objects.all()
-        return context
+        #context = dict(list(context.items())) + list(c_def.items())
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return ItemCard.objects.filter(status=True)
 
 
-class AddPage(CreateView):
+class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddCardForm
     template_name = 'main/addpage.html'
     success_url = reverse_lazy('main')
+    login_url = reverse_lazy('main') #куда перенаправлять неавторизованных
+    raise_exception = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = "Добавление карточки"
-        return context
+        c_def = self.get_user_context(title="Добавление карточки")
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 def contact(request):
@@ -48,7 +47,7 @@ def login(request):
     return HttpResponse(request, "Авторизация")
 
 
-class ShowCard(DetailView):
+class ShowCard(DataMixin, DetailView):
     model = ItemCard
     template_name = 'main/card.html'
     slug_url_kwarg = 'card_slug'
@@ -56,10 +55,10 @@ class ShowCard(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
+        c_def = self.get_user_context(title=context['card'])
         context['comment'] = Comment.objects.filter = [context['card'].pk == 'item_card']
         # context['title'] = context['card']
-        return context
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 def pageNotFound(request, exception):
