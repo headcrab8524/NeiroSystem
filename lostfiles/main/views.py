@@ -9,6 +9,7 @@ from .utils import *
 
 
 class MainHome(DataMixin, ListView):
+    paginate_by = 10
     model = ItemCard
     template_name = 'main/index.html'
     context_object_name = 'cards'

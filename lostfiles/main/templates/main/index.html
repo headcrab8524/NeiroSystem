@@ -19,7 +19,6 @@
         </td>
     </tr>
 </table>
-<section class="card-list ms-5 ps-3 pb-5 d-flex flex-wrap justify-content-start">
     <ul class="card">
         {% for card in cards %}
         <div class="article-panel">
@@ -37,8 +36,7 @@
             <p>Описание :{{card.content|linebreaks|truncatewords:20}}</p>
             {% endautoescape %}
             <div class="clear"></div>
-            <p class="link-read-post"><a class="text-white float-right" href='{{ card.get_absolute_url }}'>Читать пост</a></p>
+            <p class="link-read-post"><a class="float-right" href='{{ card.get_absolute_url }}'>Читать пост</a></p>
         {% endfor %}
     </ul>
-</section>
 {% endblock content %}

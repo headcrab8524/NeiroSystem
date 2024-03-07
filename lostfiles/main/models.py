@@ -13,8 +13,6 @@ class User(models.Model):
     group = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
 
-    def __str__(self):
-        return self.pk
 
     class Meta:
         verbose_name = 'Пользователи'
