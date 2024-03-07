@@ -32,6 +32,7 @@ img.img-article-left {
 
 img.img-article-left.thumb {
 	max-width: 150px;
+	min-height: 180px;
 	height: auto;
 }
 
@@ -62,6 +63,7 @@ ul.list-articles li {
 
 .link-read-post {
     color: black;
+    padding-left: 20px;
 }
 
 .table-page {
@@ -73,18 +75,22 @@ ul.list-articles li {
 
 .clear {clear: both;}
 
-.card-list .card {
+.card {
   display: block;
   color: white;
   font-weight: 600;
   width: 45%;
+  padding-left: 0px;
+  margin-left: 50px;
   height: 20rem;
   overflow: hidden;
   background: rgba(50, 50, 50, 0.6);
   border: 1px solid rgba(50, 50, 50, 0.125) !important;
   border-bottom-width: 1rem !important;
 }
-
+.card-entry{
+  padding-left: 20px;
+}
 @media screen and (max-width: 992px) {
   .card-list .card {
     width: 90%;

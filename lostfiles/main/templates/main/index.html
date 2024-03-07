@@ -19,24 +19,28 @@
         </td>
     </tr>
 </table>
+
+<section class="card-list d-flex flex-wrap justify-content-start">
+{% for card in cards %}
     <ul class="card">
-        {% for card in cards %}
+
         <div class="article-panel">
 
             <p class="last">Дата: {{card.time_create}}</p>
         </div>
-
             {% if card.photo %}
-            <p><img class="img-article-left thumb" src="{{card.photo.url}}"></p>
+            <p class="card-entry"><img class="img-article-left thumb"  src="{{card.photo.url}}"></p>
             {% endif %}
 
-            <h5>{{card.name}}</h5>
-            <p>Был найден в {{card.place_found}}: {{card.time_found}}</p>
+            <h5 class="card-entry">{{card.name}}</h5>
+            <p class="card-entry">Был найден в {{card.place_found}}: {{card.time_found}}</p>
             {% autoescape on %}
-            <p>Описание :{{card.content|linebreaks|truncatewords:20}}</p>
+            <p class="card-entry">Описание :{{card.content|truncatewords:20}}</p>
             {% endautoescape %}
             <div class="clear"></div>
-            <p class="link-read-post"><a class="float-right" href='{{ card.get_absolute_url }}'>Читать пост</a></p>
-        {% endfor %}
+            <p class="link-read-post"><a class="float-right" href='{{ card.get_absolute_url }}'>Просмотреть карточку</a></p>
+
     </ul>
+{% endfor %}
+</section>
 {% endblock content %}
