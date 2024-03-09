@@ -96,7 +96,11 @@ ul.list-articles li {
     width: 90%;
   }
 }
-
+.card-img{
+    max-height: 500px;
+    border: 1px solid rgba(50, 50, 50, 0.125) !important;
+    border-bottom-width: 1rem !important;
+}
 
 div.button {
 	background: #3F4137;
