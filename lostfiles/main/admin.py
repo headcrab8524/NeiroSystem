@@ -63,3 +63,4 @@ admin.site.register(UserMark, UserMarkAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Location, LocationAdmin)
+
