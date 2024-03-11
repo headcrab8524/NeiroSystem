@@ -204,3 +204,14 @@ header {
 .list-pages .page-num-selected:hover {
 	box-shadow: none;
 }
+
+.form-input {
+    width: 300px;
+    font-size: 16px;
+}
+
+.form-label {
+    display: inline-block;
+    min-width: 200px;
+    vertical-align: top;
+}
