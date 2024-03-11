@@ -5,12 +5,14 @@
 <h1 class="text-center">{{ card.name }}</h1>
     <hr class="line"> </hr>
 {% if card.photo %}
-    <p class="d-block mx-auto"><img src="{{card.photo.url}}"></p>
+    <p class="d-block mx-auto"><img class="card-img img-fluid" src="{{card.photo.url}}"></p>
 {% endif %}
-    <hr class="line"> </hr>
+    <hr class="line">
+    <h4>Описание</h4>
     <p>Был найден в {{card.place_found}} {{card.time_found}}</p>
-<p>Описание : {{card.content|linebreaks}}</p>
-    <hr class="line"> </hr>
+    <p>{{card.content|linebreaks}}</p>
+    <hr class="line">
+    <h4>Состояние</h4>
     <p>В данный момент:
         {% if card.status %}
         Находится в корпусе
@@ -18,9 +20,9 @@
         Возвращен
         {% endif %}
     </p>
-    <hr class="line"> </hr>
     <button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button>
-
+    <hr class="line">
+    <h4>Комментарии</h4>
     <button type="button" class="btn btn-outline-secondary"> Добавить комментарий</button>
     {% if comment.count > 0 %}
     {% for com in comment %}

@@ -1,4 +1,6 @@
 html, body {
+    display: flex;
+    flex-direction: column;
 	font-family: 'Arial';
 	margin: 0;
 	padding: 0;
@@ -6,7 +8,6 @@ html, body {
 	width: 100%;
 	color: #444;
 }
-
 #logo {
     width:140px;
     height: 60px;
@@ -96,7 +97,11 @@ ul.list-articles li {
     width: 90%;
   }
 }
-
+.card-img{
+    max-height: 500px;
+    border: 1px solid rgba(50, 50, 50, 0.125) !important;
+    border-bottom-width: 1rem !important;
+}
 
 div.button {
 	background: #3F4137;
@@ -128,6 +133,7 @@ div.button {
 
 .table-content {
 	width: 100%;
+	margin-top: 3px;
 }
 
 .left-chapters {
@@ -197,9 +203,4 @@ header {
 }
 .list-pages .page-num-selected:hover {
 	box-shadow: none;
-}
-
-footer{
-position: absolute;
-width: 100%;
 }
