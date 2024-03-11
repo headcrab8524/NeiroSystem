@@ -4,7 +4,7 @@ from .models import *
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('login', 'role')
+    list_display = ('role', 'username', 'password')
     list_display_links = ()
     search_fields = ('first_name', 'middle_name', 'last_name', 'login',
                      'role', 'group', 'email')
@@ -19,5 +19,5 @@ class ItemCardAdmin(admin.ModelAdmin):
     list_filter = ('item_class', 'resp_user', 'status')
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(CustomUser, UserAdmin)
 admin.site.register(ItemCard, ItemCardAdmin)

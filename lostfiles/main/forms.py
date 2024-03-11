@@ -1,6 +1,8 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 
+import main.models
 from .models import *
 
 
@@ -23,3 +25,18 @@ class AddCardForm(forms.ModelForm):
             raise ValidationError('Длина превышает 255 символов')
 
         return name
+
+
+class RegisterUserForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('username', 'password1', 'password2', 'first_name',
+                  'middle_name', 'last_name', 'photo', 'group', 'email')
+        widgets = {}
+
+
+class LoginUserForm(AuthenticationForm):
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        #fields = ()
+        widgets = {}

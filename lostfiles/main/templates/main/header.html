@@ -6,11 +6,9 @@
                     <img id="logo"  src="{% static 'main/images/kgynewlogo.png' %}">
                 </a>
 
-
-
                 <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-warning">Sign-up</button>
+                    <button type="button" class="btn btn-outline-light me-2"><a href="{% url 'login' %}">Авторизоваться</a></button>
+                    <button type="button" class="btn btn-warning"><a href="{% url 'register' %}">Зарегистрироваться</a></button>
                 </div>
             </div>
         </div>

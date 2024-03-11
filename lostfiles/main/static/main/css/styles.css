@@ -198,3 +198,8 @@ header {
 .list-pages .page-num-selected:hover {
 	box-shadow: none;
 }
+
+footer{
+position: absolute;
+width: 100%;
+}
