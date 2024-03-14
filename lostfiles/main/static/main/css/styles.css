@@ -156,12 +156,11 @@ div.button {
 header {
     position: fixed;
     z-index: 5;
+    height: 120px;
     width: 100%;
 }
 
-.fake_header_container{
-    height: 90px;
-}
+
 
 .line{
     height 5px;
@@ -214,4 +213,14 @@ header {
     display: inline-block;
     min-width: 200px;
     vertical-align: top;
+}
+.profile-photo-header {
+  width: 2.5em;
+  padding-bottom: 2.5em;
+  background-size: cover;
+  background-position: center center;
+}
+
+.fake_header_container{
+height: 120px;
 }
