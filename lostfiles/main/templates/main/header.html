@@ -7,7 +7,7 @@
                 </a>
 
                 <div class="text-end">
-                    {% if request.user.authenticated %}
+                    {% if request.user.is_authenticated %}
                     <div class="d-flex flex-direction-column" >
                         {% if user.photo %}
                         <a href="#" ><img src="{{ user.photo.url }}" ></a>
@@ -21,7 +21,7 @@
                             Тип предметов
                         </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="link-light" href="#"><button type="button" class="btn btn-outline-light me-2 ">Выйти</button></a></li>
+                        <li><a class="link-light" href="{% url 'logout' %}"><button type="button" class="btn btn-outline-light me-2 ">Выйти</button></a></li>
                     </ul>
                         <div>
                     {% else %}
