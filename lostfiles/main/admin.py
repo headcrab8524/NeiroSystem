@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 
 from .models import *
 
@@ -10,13 +11,31 @@ class UserAdmin(admin.ModelAdmin):
                      'role', 'group', 'email')
     list_editable = ()
 
+    fields = ()
+    readonly_fields = ()
+    
+    def get_html_photo(self, object):
+        if object.photo:
+            return mark_safe(f"<img src='{object.photo.url}' width=50>")
+
+    get_html_photo.short_description = "Аватар"
+
 
 class ItemCardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'item_class', 'time_create', 'resp_user', 'status')
+    list_display = ('name', 'get_html_photo', 'item_class', 'time_create', 'resp_user', 'status')
     list_display_links = ()
     search_fields = ('name', 'item_class', 'resp_user', 'status')
     list_editable = ()
     list_filter = ('item_class', 'resp_user', 'status')
+
+    fields = ()
+    readonly_fields = ()
+
+    def get_html_photo(self, object):
+        if object.photo:
+            return mark_safe(f"<img src='{object.photo.url}' width=50>")
+
+    get_html_photo.short_description = "Фото предмета"
 
 
 class CommentAdmin(admin.ModelAdmin):
