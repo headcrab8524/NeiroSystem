@@ -28,15 +28,27 @@ class AddCardForm(forms.ModelForm):
 
 
 class RegisterUserForm(UserCreationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={}))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={}))
+    password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={}))
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={}))
+    middle_name = forms.CharField(label='Отчество', widget=forms.TextInput(attrs={}))
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={}))
+    photo = forms.FileField(label='Фото', widget=forms.FileInput(attrs={}))
+    group = forms.CharField(label='Группа', widget=forms.TextInput(attrs={}))
+    email = forms.EmailField(label='Эл. почта', widget=forms.EmailInput(attrs={}))
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'password1', 'password2', 'first_name',
-                  'middle_name', 'last_name', 'photo', 'group', 'email')
-        widgets = {}
+        fields = ('username', 'password1', 'password2', 'last_name',
+                  'first_name', 'middle_name', 'photo', 'group', 'email')
 
 
 class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={}))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={}))
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        #fields = ()
+        fields = ('username', 'password')
         widgets = {}

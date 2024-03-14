@@ -64,3 +64,6 @@ admin.site.register(Role, RoleAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Location, LocationAdmin)
 
+
+admin.site.site_title = 'Админ-панель сайта'
+admin.site.site_header = 'Админ-панель сайта'

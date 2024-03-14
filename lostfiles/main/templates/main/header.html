@@ -8,7 +8,11 @@
 
                 <div class="text-end">
                     {% if request.user.is_authenticated %}
+<<<<<<< HEAD
                     <div class="d-flex">
+=======
+                    <div class="d-flex flex-direction-column" >
+>>>>>>> 4618c30a362d9a73cc5e874bf546fc326d7d47ae
                         {% if user.photo %}
                         <a href="#" class="ms-2"><div class="profile-photo-header rounded-circle"
                              style="background-image: url('{{user.photo.url}}');">
@@ -28,7 +32,8 @@
                             Дополнительные опции
                         </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a href="#">Выйти</a></li>
+                        <li><a href="{% url 'logout' %}">Выйти</a></li>
+
                     </ul>
                         <div>
                     {% else %}
