@@ -20,7 +20,7 @@
             <p>Основная информация</p>
             <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
                 <div>
-                    <p style="margin: 15px;">Имя:</p>
+                    <p style="margin: 15px;">Имя пользователя:</p>
                 </div>
                 <div>
                     <p style="margin: 15px;">{{ current_user.username }}</p>
@@ -28,34 +28,26 @@
             </div>
             <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
                 <div>
-                    <p style="margin: 15px;">Группа:</p>
+                    <p style="margin: 15px;">Имя:</p>
                 </div>
                 <div>
-                    <p style="margin: 15px;">{{ current_user.IdGroup }}</p>
-                </div>
-            </div>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
-                <div>
-                    <p style="margin: 15px;">Дата рождения:</p>
-                </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.birthdate }}</p>
+                    <p style="margin: 15px;">{{ current_user.first_name }}</p>
                 </div>
             </div>
             <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
                 <div>
-                    <p style="margin: 15px;">Пол:</p>
+                    <p style="margin: 15px;">Отчество:</p>
                 </div>
                 <div>
-                    <p style="margin: 15px;">{{ current_user.sex }}</p>
+                    <p style="margin: 15px;">{{ current_user.middle_name }}</p>
                 </div>
             </div>
             <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
                 <div>
-                    <p style="margin: 15px;">Страна:</p>
+                    <p style="margin: 15px;">Фамилия:</p>
                 </div>
                 <div>
-                    <p style="margin: 15px;">{{ current_user.Country }}</p>
+                    <p style="margin: 15px;">{{ current_user.last_name }}</p>
                 </div>
             </div>
         </div>
@@ -67,6 +59,22 @@
                 </div>
                 <div>
                     <p style="margin: 15px;">{{ current_user.email }}</p>
+                </div>
+            </div>
+            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+                <div>
+                    <p style="margin: 15px;">Группа:</p>
+                </div>
+                <div>
+                    <p style="margin: 15px;">{{ current_user.group }}</p>
+                </div>
+            </div>
+            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+                <div>
+                    <p style="margin: 15px;">Права:</p>
+                </div>
+                <div>
+                    <p style="margin: 15px;">{{ current_user.role.name }}</p>
                 </div>
             </div>
         </div>
