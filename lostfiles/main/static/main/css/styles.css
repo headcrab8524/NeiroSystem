@@ -255,3 +255,10 @@ height: 120px;
   height: 5px;
   background-color: #198754;
 }
+.profile_attr{
+  display:flex;
+  flex-direction: row;
+  background-color:#d0d0d0;
+  padding: 5px;
+  margin: 5px;
+}

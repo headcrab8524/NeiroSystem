@@ -1,24 +1,22 @@
 {% extends "main/base.html" %}
-
+{% load static %}
 {% block content %}
 <div>
-    <div>
-
+    {% if user.photo %}
+    <div class="ms-md-5 profile-photo-on-page rounded-circle"
+         style="background-image: url('{{user.photo.url}}');">
     </div>
-    <div style="display: flex; background-color:#222222;">
-        <div style="display: flex; flex-direction:column; height: 100%; align-items: stretch;">
-            <square class="line-square" style="background-color:#00bb2f; height: 10px; display: block;"></square>
-            <div style="background: rgba(128, 128, 128, .8);">
-                <p style="margin: 15px 5px 15px 5px;">
-                    {{ current_user.username }}
-                </p>
-            </div>
-        </div>
+    {% else %}
+    <div class="ms-md-5 profile-photo-on-page rounded-circle"
+         style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
     </div>
+    {% endif %}
+    <hr>
     <div style="display:flex; flex-direction: row; justify-content: space-evenly; margin-top: 15px;">
         <div style="display:flex; flex-direction: column;">
             <p>Основная информация</p>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <hr>
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">Имя пользователя:</p>
                 </div>
@@ -26,7 +24,7 @@
                     <p style="margin: 15px;">{{ current_user.username }}</p>
                 </div>
             </div>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">Имя:</p>
                 </div>
@@ -34,7 +32,7 @@
                     <p style="margin: 15px;">{{ current_user.first_name }}</p>
                 </div>
             </div>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">Отчество:</p>
                 </div>
@@ -42,7 +40,7 @@
                     <p style="margin: 15px;">{{ current_user.middle_name }}</p>
                 </div>
             </div>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">Фамилия:</p>
                 </div>
@@ -53,7 +51,8 @@
         </div>
         <div style="display:flex; flex-direction: column;">
             <p>Дополнительная информация</p>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <hr>
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">E-mail:</p>
                 </div>
@@ -61,7 +60,7 @@
                     <p style="margin: 15px;">{{ current_user.email }}</p>
                 </div>
             </div>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">Группа:</p>
                 </div>
@@ -69,12 +68,12 @@
                     <p style="margin: 15px;">{{ current_user.group }}</p>
                 </div>
             </div>
-            <div style="display:flex; flex-direction: row; background-color:#222222; padding: 5px; margin: 5px;">
+            <div class="profile_attr">
                 <div>
                     <p style="margin: 15px;">Права:</p>
                 </div>
                 <div>
-                    <p style="margin: 15px;">{{ current_user.role.name }}</p>
+                    <p style="margin: 15px;">{{ current_user.role }}</p>
                 </div>
             </div>
         </div>
