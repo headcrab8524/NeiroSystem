@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}
 Профиль пользователя {{ user.username }}
@@ -56,13 +56,12 @@
 
         <div class="row bg-dark border border-secondary py-3">
           <div class="col-6"><b>E-mail:</b></div>
-          <div class="col-6" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{
-            user.email }}</div>
+          <div class="col-6" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ user.email }}</div>
         </div>
         <div class="row bg-dark border border-secondary py-3">
           <div class="col-6"><b>Группа:</b></div>
-          <div class="col-6" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{
-            user.group }}</div>
+          <div class="col-6" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+            {{ user.group }}</div>
         </div>
       </div>
     </div>

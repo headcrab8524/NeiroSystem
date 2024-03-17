@@ -114,10 +114,10 @@ class CurrentUserProfile(DataMixin, DetailView):
 class UserProfile(DataMixin, DetailView):
     model = CustomUser
     template_name = 'main/user.html'
-    slug_url_kwarg = 'username'
+    pk_url_kwarg = 'user_id'
     context_object_name = 'user'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title=context['username'])
+        c_def = self.get_user_context(title="Профиль")
         return dict(list(context.items()) + list(c_def.items()))
