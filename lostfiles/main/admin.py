@@ -13,7 +13,7 @@ class UserAdmin(admin.ModelAdmin):
 
     fields = ()
     readonly_fields = ()
-    
+
     def get_html_photo(self, object):
         if object.photo:
             return mark_safe(f"<img src='{object.photo.url}' width=50>")

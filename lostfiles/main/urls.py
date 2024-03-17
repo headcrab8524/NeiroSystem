@@ -8,6 +8,7 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logout_user, name='logout'),
+    path('profile/', UserProfile.as_view(), name='profile'),
     path('register/', RegisterUser.as_view(), name='register'),
     path('card/<slug:card_slug>/', ShowCard.as_view(), name='card')
 ]
