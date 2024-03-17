@@ -224,3 +224,34 @@ header {
 .fake_header_container{
 height: 120px;
 }
+.profile-photo-comment {
+  width: 100%;
+  padding-bottom: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.profile-photo-comment-2 {
+  width: 4rem;
+  padding-bottom: 4rem;
+  background-size: cover;
+  background-position: center center;
+}
+
+.profile-photo-on-page {
+  width: 15rem;
+  padding-bottom: 15rem;
+  background-size: cover;
+  background-position: center center;
+}
+
+.user-info-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 5px;
+  background-color: #198754;
+}
