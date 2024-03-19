@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+{% if request.user.pk != user.pk %}
 <section class="pt-5 pb-5">
   <section class="ps-md-5 d-flex flex-column align-items-center">
     <h3 class="profile-title ms-4 mb-4 text-center">Профиль пользователя <b>"{{ user.username }}"</b></h3>
@@ -69,5 +70,9 @@
         </div>
         </div>
     </div>
+  </div>
 </section>
+{% else %}
+<meta http-equiv="refresh" content="0;URL={% url 'main' %}">
+{% endif %}
 {% endblock %}
