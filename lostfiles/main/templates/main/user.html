@@ -1,5 +1,5 @@
 {% extends "main/base.html" %}
-
+{% load static %}
 {% block title %}
 Профиль пользователя {{ user.username }}
 {% endblock %}
@@ -8,62 +8,66 @@
 <section class="pt-5 pb-5">
   <section class="ps-md-5 d-flex flex-column align-items-center">
     <h3 class="profile-title ms-4 mb-4 text-center">Профиль пользователя <b>"{{ user.username }}"</b></h3>
+    {% if user.photo %}
     <div class="ms-md-5 profile-photo-on-page rounded-circle"
          style="background-image: url('{{user.photo.url}}');">
     </div>
+    {% else %}
+    <div class="ms-md-5 profile-photo-on-page rounded-circle"
+         style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
+    </div>
+    {% endif %}
   </section>
 
-  <div class="container-fluid bg-dark mt-5">
-    <div class="row">
-      <h3 class="user-info-title position-relative col-md-3 py-3 mb-0 bg-light-dark text-center">
-        {{ user.username }}
-      </h3>
-      <hr class="mb-0">
-    </div>
+  <div class="container-fluid  mt-5">
     <div class="row">
       <div class="col-md-6 container pt-3 bg-light-dark pb-4 px-4">
         <div class="row">
-          <h5 class="ms-3 mb-3">Основная информация</h5>
+          <h5 class="ms-3 mb-3 text-light">Основная информация</h5>
         </div>
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>Имя пользователя:</b></div>
-          <div class="col-6">{{ user.username }}</div>
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>Имя пользователя:</b></div>
+          <div class="col-6 text-light">{{ user.username }}</div>
         </div>
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>Фамилия:</b></div>
-          <div class="col-6">{{ user.last_name }}</div>
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>Фамилия:</b></div>
+          <div class="col-6 text-light">{{ user.last_name }}</div>
         </div>
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>Имя:</b></div>
-          <div class="col-6">{{ user.first_name }}</div>
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>Имя:</b></div>
+          <div class="col-6 text-light">{{ user.first_name }}</div>
         </div>
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>Отчество:</b></div>
-          <div class="col-6">{{ user.middle_name }}</div>
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>Отчество:</b></div>
+          <div class="col-6 text-light">{{ user.middle_name }}</div>
         </div>
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>Группа:</b></div>
-          {% if user.is_authenticated and user.IdGroup == 2 %}
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>Группа:</b></div>
+          {% if user.is_authenticated and user.role == 2 and user.id != request.user.id %}
           <select name="user-groups" id="user-groups-select" class="form-select form-select-sm w-25"
                   onchange="location = this.value;">
             <option>user</option>
             <option>admin</option>
           </select>
           {% else %}
-          <div class="col-6">{{ user.role.name }}</div>
+          <div class="col-6 text-light">{{ user.role.name }}</div>
           {% endif %}
         </div>
-
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>E-mail:</b></div>
-          <div class="col-6" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ user.email }}</div>
+      </div>
+      <div class="col-md-6 container pt-3 bg-light-dark pb-4 px-4">
+        <div class="row">
+          <h5 class="ms-3 mb-3 text-light">Дополнительная информация</h5>
         </div>
-        <div class="row bg-dark border border-secondary py-3">
-          <div class="col-6"><b>Группа:</b></div>
-          <div class="col-6" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>E-mail:</b></div>
+          <div class="col-6 text-light" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ user.email }}</div>
+        </div>
+        <div class="row bg-secondary border border-dark py-3 mt-2">
+          <div class="col-6 text-light"><b>Группа:</b></div>
+          <div class="col-6 text-light" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
             {{ user.group }}</div>
         </div>
-      </div>
+        </div>
     </div>
 </section>
 {% endblock %}

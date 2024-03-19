@@ -1,82 +1,64 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% block title %}
+Профиль пользователя {{ user.username }}
+{% endblock %}
 {% block content %}
-<div>
-    {% if user.photo %}
-    <div class="ms-md-5 profile-photo-on-page rounded-circle"
-         style="background-image: url('{{user.photo.url}}');">
-    </div>
-    {% else %}
-    <div class="ms-md-5 profile-photo-on-page rounded-circle"
-         style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
-    </div>
-    {% endif %}
-    <hr>
-    <div style="display:flex; flex-direction: row; justify-content: space-evenly; margin-top: 15px;">
-        <div style="display:flex; flex-direction: column;">
-            <p>Основная информация</p>
-            <hr>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">Имя пользователя:</p>
+<section class="pt-5 pb-5">
+    <section class="ps-md-5 d-flex flex-column align-items-center">
+        <h3 class="profile-title ms-4 mb-4 text-center">Профиль пользователя <b>"{{ user.username }}"</b></h3>
+        {% if user.photo %}
+        <div class="ms-md-5 profile-photo-on-page rounded-circle"
+             style="background-image: url('{{user.photo.url}}');">
+        </div>
+        {% else %}
+        <div class="ms-md-5 profile-photo-on-page rounded-circle"
+             style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
+        </div>
+        {% endif %}
+    </section>
+
+    <div class="container-fluid  mt-5">
+        <div class="row">
+            <div class="col-md-6 container pt-3 bg-light-dark pb-4 px-4">
+                <div class="row">
+                    <h5 class="ms-3 mb-3 text-light">Основная информация</h5>
                 </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.username }}</p>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>Имя пользователя:</b></div>
+                    <div class="col-6 text-light">{{ user.username }}</div>
+                </div>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>Фамилия:</b></div>
+                    <div class="col-6 text-light">{{ user.last_name }}</div>
+                </div>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>Имя:</b></div>
+                    <div class="col-6 text-light">{{ user.first_name }}</div>
+                </div>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>Отчество:</b></div>
+                    <div class="col-6 text-light">{{ user.middle_name }}</div>
+                </div>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>Группа:</b></div>
+                    <div class="col-6 text-light">{{ user.role.name }}</div>
                 </div>
             </div>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">Имя:</p>
+            <div class="col-md-6 container pt-3 bg-light-dark pb-4 px-4">
+                <div class="row">
+                    <h5 class="ms-3 mb-3 text-light">Дополнительная информация</h5>
                 </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.first_name }}</p>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>E-mail:</b></div>
+                    <div class="col-6 text-light" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ user.email }}</div>
                 </div>
-            </div>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">Отчество:</p>
-                </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.middle_name }}</p>
-                </div>
-            </div>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">Фамилия:</p>
-                </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.last_name }}</p>
+                <div class="row bg-secondary border border-dark py-3 mt-2">
+                    <div class="col-6 text-light"><b>Группа:</b></div>
+                    <div class="col-6 text-light" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                        {{ user.group }}</div>
                 </div>
             </div>
         </div>
-        <div style="display:flex; flex-direction: column;">
-            <p>Дополнительная информация</p>
-            <hr>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">E-mail:</p>
-                </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.email }}</p>
-                </div>
-            </div>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">Группа:</p>
-                </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.group }}</p>
-                </div>
-            </div>
-            <div class="profile_attr">
-                <div>
-                    <p style="margin: 15px;">Права:</p>
-                </div>
-                <div>
-                    <p style="margin: 15px;">{{ current_user.role }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 {% endblock %}
