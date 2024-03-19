@@ -10,18 +10,18 @@
                     {% if request.user.is_authenticated %}
                     <div class="d-flex" >
                         {% if user.photo %}
-                        <a href="{% url 'profile' request.user.pk %}" class="ms-2"><div class="profile-photo-header rounded-circle"
+                        <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header rounded-circle"
                              style="background-image: url('{{request.user.photo.url}}');">
                         </div>
                         </a>
                         {% else %}
 
-                        <a href="{% url 'profile' request.user.pk %}" class="ms-2"><div class="profile-photo-header rounded-circle"
+                        <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header rounded-circle"
                              style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
                         </div>
                         </a>
                         {% endif %}
-                        <a class="link-light mt-2" href="{% url 'profile' request.user.pk %}"><span class="ms-2 mt-10">{{ request.user.username }}</span></a>
+                        <a class="link-light mt-2" href="{% url 'profile' %}"><span class="ms-2 mt-10">{{ request.user.username }}</span></a>
                     </div>
                     <div class="dropdown mt-2">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
