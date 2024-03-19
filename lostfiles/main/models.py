@@ -86,6 +86,9 @@ class Class(models.Model):
     def __str__(self):
         return self.rus_name
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'cat_id': self.pk})
+
     class Meta:
         verbose_name = 'Типы предметов'
         verbose_name_plural = 'Типы предметов'

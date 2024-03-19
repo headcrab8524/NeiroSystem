@@ -42,7 +42,6 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-
 class ShowCard(DataMixin, DetailView):
     model = ItemCard
     template_name = 'main/card.html'
@@ -119,3 +118,19 @@ class UserProfile(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Профиль")
         return dict(list(context.items()) + list(c_def.items()))
+
+
+class ItemCategory(DataMixin, ListView):
+    paginate_by = 10
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Фильтр по категории')
+        context['itemclass'] = Class.objects.all()
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return ItemCard.objects.filter(item_class=self.kwargs['cat_id'], status=True).order_by('-time_create')

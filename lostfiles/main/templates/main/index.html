@@ -10,7 +10,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     {% for class in itemclass %}
-                        <li><a class="dropdown-item" href="#">{{class.rus_name}}</a></li>
+                        <li><a class="dropdown-item" href="{{ class.get_absolute_url }}">{{class.rus_name}}</a></li>
                     {% endfor %}
                 </ul>
             </div>
