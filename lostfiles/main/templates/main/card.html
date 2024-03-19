@@ -23,6 +23,10 @@
     <button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button>
     <hr class="line">
     <h4>Комментарии</h4>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Напишите ваш комментаий</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
     <button type="button" class="btn btn-outline-secondary"> Добавить комментарий</button>
     {% if comment.count > 0 %}
     {% for com in comment %}
@@ -30,15 +34,15 @@
         <a href="{{ com.user.login }}"
            class="d-flex align-items-center link-light text-decoration-none mb-3">
             <div class="profile-photo-comment-2 rounded-circle me-3"
-                 style="background-image: {{com.user.photo.url}};">
+                 style="background-image: {{ com.user.photo.url }};">
             </div>
             <div class="d-flex flex-column">
-                <div class="fs-4">{{ comment.user.username }}</div>
-                <div class="">{{ comment.time_create }}</div>
+                <div class="fs-4">{{ com.user.username }}</div>
+                <div class="">{{ com.time_create }}</div>
             </div>
         </a>
 
-        <p class="ps-2">{{ comment.text }}</p>
+        <p class="ps-2">{{ com.text }}</p>
     </article>
     {% endfor %}
     {% else %}
