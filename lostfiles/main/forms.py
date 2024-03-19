@@ -34,7 +34,7 @@ class RegisterUserForm(UserCreationForm):
     first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={}))
     middle_name = forms.CharField(label='Отчество', widget=forms.TextInput(attrs={}))
     last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={}))
-    photo = forms.FileField(label='Фото', widget=forms.FileInput(attrs={}))
+    photo = forms.ImageField(label='Фото')
     group = forms.CharField(label='Группа', widget=forms.TextInput(attrs={}))
     email = forms.EmailField(label='Эл. почта', widget=forms.EmailInput(attrs={}))
 
