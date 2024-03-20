@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import *
@@ -52,7 +52,6 @@ class ShowCard(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['card'].name)
         context['comment'] = Comment.objects.all() #TODO починить фильтрацию по предметам
-        # context['title'] = context['card']
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -134,3 +133,31 @@ class ItemCategory(DataMixin, ListView):
 
     def get_queryset(self):
         return ItemCard.objects.filter(item_class=self.kwargs['cat_id'], status=True).order_by('-time_create')
+
+
+class ChangeUserInfo(DataMixin, UpdateView):
+    form_class = ChangeUserInfo
+    model = CustomUser
+    template_name = 'main/redact.html'
+    success_url = reverse_lazy('profile')
+    pk_url_kwarg = 'user_id'
+    context_object_name = 'user'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Редактирование профиля')
+        return dict(list(context.items()) + list(c_def.items()))
+
+
+class UpdateUser(DataMixin, UpdateView): #TODO Форма не обрабатывается корректно (вылетает при сохранении)
+    form_class = UpdateUser
+    model = CustomUser
+    template_name = 'main/redact.html'
+    success_url = reverse_lazy('user')
+    pk_url_kwarg = 'user_id'
+    context_object_name = 'user'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Редактирование профиля')
+        return dict(list(context.items()) + list(c_def.items()))

@@ -52,3 +52,22 @@ class LoginUserForm(AuthenticationForm):
         model = CustomUser
         fields = ('username', 'password')
         widgets = {}
+
+
+class ChangeUserInfo(forms.ModelForm):
+    first_name = forms.CharField(label='Имя', widget=forms.TextInput(attrs={}))
+    middle_name = forms.CharField(label='Отчество', widget=forms.TextInput(attrs={}))
+    last_name = forms.CharField(label='Фамилия', widget=forms.TextInput(attrs={}))
+    photo = forms.ImageField(label='Фото')
+    group = forms.CharField(label='Группа', widget=forms.TextInput(attrs={}))
+    email = forms.EmailField(label='Эл. почта', widget=forms.EmailInput(attrs={}))
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'middle_name', 'last_name', 'photo', 'group', 'email']
+
+
+class UpdateUser(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['role']

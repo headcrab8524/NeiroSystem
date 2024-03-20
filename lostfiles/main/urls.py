@@ -12,4 +12,6 @@ urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
     path('card/<slug:card_slug>/', ShowCard.as_view(), name='card'),
     path('category/<int:cat_id>/', ItemCategory.as_view(), name='category'),
+    path('redact/<int:user_id>/', ChangeUserInfo.as_view(), name='redact'),
+    path('update_user/<int:user_id>/', UpdateUser.as_view(), name='update_user'),
 ]

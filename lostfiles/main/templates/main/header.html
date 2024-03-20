@@ -9,7 +9,7 @@
                 <div class="text-end">
                     {% if request.user.is_authenticated %}
                     <div class="d-flex" >
-                        {% if user.photo %}
+                        {% if request.user.photo %}
                         <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header rounded-circle"
                              style="background-image: url('{{request.user.photo.url}}');">
                         </div>
