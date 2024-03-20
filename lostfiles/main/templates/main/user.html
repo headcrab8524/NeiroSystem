@@ -44,7 +44,7 @@
         </div>
         <div class="row bg-secondary border border-dark py-3 mt-2">
           <div class="col-6 text-light"><b>Группа:</b></div>
-          {% if user.is_authenticated and user.role == 2 and user.id != request.user.id %}
+          {% if request.user.is_authenticated and request.user.role.pk == 2 and user.id != request.user.id %}
           <select name="user-groups" id="user-groups-select" class="form-select form-select-sm w-25"
                   onchange="location = this.value;">
             <option>user</option>
