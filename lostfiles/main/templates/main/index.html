@@ -9,6 +9,7 @@
                     Тип предметов
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{{ class.get_absolute_url }}">Все</a></li> #TODO починить
                     {% for class in itemclass %}
                         <li><a class="dropdown-item" href="{{ class.get_absolute_url }}">{{class.rus_name}}</a></li>
                     {% endfor %}

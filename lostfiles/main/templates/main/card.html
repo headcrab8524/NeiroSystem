@@ -35,11 +35,11 @@
            class="d-flex align-items-center link-light text-decoration-none mb-3">
             {% if com.user.photo %}
             <div class="profile-photo-comment-2 rounded-circle me-3"
-                 style="background-image: url {{ com.user.photo.url }};">
+                 style="background-image: url('{{ com.user.photo.url }}');">
             </div>
             {% else %}
             <div class="profile-photo-comment-2 rounded-circle me-3"
-                 style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
+                 style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}'); ">
             </div>
             {% endif %}
             <div class="d-flex flex-column">

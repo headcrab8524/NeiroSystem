@@ -72,7 +72,7 @@
     </div>
   </div>
   {% if request.user.role.pk == 1 %}
-  <button><a href="{% url 'update_user' user.pk %}">Редактировать профиль</a></button>
+  <button class="btn btn-secondary"><a class="link-light" href="{% url 'update_user' user.pk %}">Редактировать профиль</a></button>
   {% endif %}
 </section>
 {% else %}
