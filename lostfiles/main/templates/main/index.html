@@ -28,16 +28,16 @@
             <p class="last">Дата: {{card.time_create}}</p>
         </div>
             {% if card.photo %}
-            <p class="card-entry"><img class="img-article-left thumb"  src="{{card.photo.url}}"></p>
+            <p class="mt-4" style="padding-left: 30%;"><img class="img-article-left thumb"  src="{{card.photo.url}}"></p>
             {% endif %}
-
+            <hr>
             <h5 class="card-entry">{{card.name}}</h5>
             <p class="card-entry">Был найден в {{card.place_found}}: {{card.time_found}}</p>
             {% autoescape on %}
             <p class="card-entry">Описание: {{card.content|truncatewords:20}}</p>
             {% endautoescape %}
             <div class="clear"></div>
-            <p class="link-read-post"><a class="float-right" href='{{ card.get_absolute_url }}'>Просмотреть карточку</a></p>
+            <p class="link-read-post"><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href='{{ card.get_absolute_url }}'>Просмотреть карточку</a></p>
 
     </ul>
 {% endfor %}

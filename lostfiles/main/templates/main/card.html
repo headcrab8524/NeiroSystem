@@ -23,11 +23,13 @@
     <button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button>
     <hr class="line">
     <h4>Комментарии</h4>
+    {% if request.user.is_authenticated %}
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Напишите ваш комментарий</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     <button type="button" class="btn btn-outline-secondary"> Добавить комментарий</button>
+    {% endif %}
     {% if comment %}
         {% for com in comment %}
             <article class="border border-secondary rounded p-2 mt-3 mb-3 bg-dark">

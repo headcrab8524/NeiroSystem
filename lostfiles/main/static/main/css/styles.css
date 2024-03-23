@@ -32,8 +32,8 @@ img.img-article-left {
 }
 
 img.img-article-left.thumb {
-	max-width: 150px;
-	min-height: 180px;
+	max-width: 250px;
+	min-height: 280px;
 	height: auto;
 }
 
