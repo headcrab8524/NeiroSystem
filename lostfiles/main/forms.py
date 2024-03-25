@@ -71,3 +71,11 @@ class UpdateUser(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['role']
+
+
+class CommentForm(forms.ModelForm):
+    text = forms.Textarea()
+
+    class Meta:
+        model = Comment
+        fields = ['text']

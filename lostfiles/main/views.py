@@ -153,7 +153,7 @@ class UpdateUser(DataMixin, UpdateView):  #TODO Форма не обрабаты
     form_class = UpdateUser
     model = CustomUser
     template_name = 'main/redact.html'
-    success_url = reverse_lazy('user', )
+    success_url = reverse_lazy('user')
     pk_url_kwarg = 'user_id'
     context_object_name = 'user'
 
@@ -161,3 +161,13 @@ class UpdateUser(DataMixin, UpdateView):  #TODO Форма не обрабаты
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Редактирование профиля')
         return dict(list(context.items()) + list(c_def.items()))
+
+
+def comment(request, card_id):
+    card = ItemCard.objects.get(pk=card_id)
+    if request.method == "POST":
+        text = request.POST["text"]
+        new_comment = Comment(text=text, user=request.user, item_card=card)
+        new_comment.save()
+
+    return redirect('card', card_slug=card.slug)

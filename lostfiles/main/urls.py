@@ -14,4 +14,5 @@ urlpatterns = [
     path('category/<int:cat_id>/', ItemCategory.as_view(), name='category'),
     path('redact/<int:user_id>/', ChangeUserInfo.as_view(), name='redact'),
     path('update_user/<int:user_id>/', UpdateUser.as_view(), name='update_user'),
+    path('comment/<int:card_id>', comment, name='comment'),
 ]

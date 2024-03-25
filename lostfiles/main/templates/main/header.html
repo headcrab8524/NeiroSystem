@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="{% url 'profile' %}">Перейти в профиль</a></li>
                         {% if request.user.role.id == 1 %}
-                        <li><a class="dropdown-item" href="#">Создать карточку предмета</a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_page' %}">Создать карточку предмета</a></li>
                         {% endif %}
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
 

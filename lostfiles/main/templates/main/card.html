@@ -38,14 +38,19 @@
     {% if request.user.is_authenticated %}
     <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Напишите ваш комментарий</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <form action="{% url 'comment' card.pk %}" method="post">
+            {% csrf_token %}
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="text"></textarea>
+        <a href="{% url 'comment' card.pk %}"><button type="submit" class="btn btn-outline-secondary"> Добавить комментарий</button></a>
+        </form>
     </div>
-    <button type="button" class="btn btn-outline-secondary"> Добавить комментарий</button>
+    {% else %}
+        <label for="exampleFormControlTextarea1" class="form-label">Пожалуйста, <a href="{% url 'login' %}">авторизуйтесь</a>, чтобы оставить комментарий.</label>
     {% endif %}
     {% if comment %}
         {% for com in comment %}
             <article class="border border-secondary rounded p-2 mt-3 mb-3 bg-dark">
-                <a href="#"
+                <a href="{% url 'user' com.user.pk %}"
                    class="d-flex align-items-center link-light text-decoration-none mb-3">
                     {% if com.user.photo %}
                     <div class="profile-photo-comment-2 rounded-circle me-3"
