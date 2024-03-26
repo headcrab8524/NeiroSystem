@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     middle_name = models.CharField(max_length=255, null=True, blank=True, verbose_name="Отчество")
     last_name = models.CharField(max_length=255, verbose_name="Фамилия")
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/", null=True, blank=True, verbose_name="Фото")
-    role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Роль")
+    role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Роль", default=2)
     group = models.CharField(max_length=255, null=True, blank=True, verbose_name="Группа")
     email = models.CharField(max_length=255, null=True, blank=True, verbose_name="Эл. почта")
 

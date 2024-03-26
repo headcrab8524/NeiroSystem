@@ -43,13 +43,15 @@
           <div class="col-6 text-light">{{ user.middle_name }}</div>
         </div>
         <div class="row bg-secondary border border-dark py-3 mt-2">
-          <div class="col-6 text-light"><b>Группа:</b></div>
-          {% if request.user.is_authenticated and request.user.role.pk == 2 and user.id != request.user.id %}
-          <select name="user-groups" id="user-groups-select" class="form-select form-select-sm w-25"
-                  onchange="location = this.value;">
-            <option>user</option>
-            <option>admin</option>
+          <div class="col-6 text-light"><b>Роль:</b></div>
+          {% if request.user.is_authenticated and request.user.role.pk == 1 and user.pk != request.user.pk %}
+          <form action="{% url 'update_user' user.pk %}" method="post">
+            {% csrf_token %}
+          <select name="user_role" id="user-groups-select" class="form-select form-select-sm w-25">
+            <option value="2">Пользователь</option>
+            <option value="1">Администратор</option>
           </select>
+            </form>
           {% else %}
           <div class="col-6 text-light">{{ user.role.name }}</div>
           {% endif %}
@@ -72,7 +74,7 @@
     </div>
   </div>
   {% if request.user.role.pk == 1 %}
-  <button class="btn btn-secondary"><a class="link-light link-underline link-underline-opacity-0" href="{% url 'update_user' user.pk %}">Редактировать профиль</a></button>
+  <button type="submit" class="btn btn-secondary"><a class="link-light link-underline link-underline-opacity-0" href="{% url 'update_user' user.pk %}">Сохранить изменения</a></button>
   {% endif %}
 </section>
 {% else %}

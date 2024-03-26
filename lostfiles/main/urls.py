@@ -13,6 +13,8 @@ urlpatterns = [
     path('card/<slug:card_slug>/', ShowCard.as_view(), name='card'),
     path('category/<int:cat_id>/', ItemCategory.as_view(), name='category'),
     path('redact/<int:user_id>/', ChangeUserInfo.as_view(), name='redact'),
-    path('update_user/<int:user_id>/', UpdateUser.as_view(), name='update_user'),
+    path('update_user/<int:user_id>/', update_user, name='update_user'),
     path('comment/<int:card_id>', comment, name='comment'),
+    path('mark_card/<int:card_id>', mark_card, name='mark_card'),
+    path('unmark_card/<int:card_id>', unmark_card, name='unmark_card'),
 ]
