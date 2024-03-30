@@ -1,5 +1,6 @@
 from django.contrib.auth import logout, login
 from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseNotFound
 from django.urls import reverse_lazy
@@ -22,7 +23,7 @@ class MainHome(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Главная страница')
         context['itemclass'] = Class.objects.all()
-        #context = dict(list(context.items())) + list(c_def.items())
+        # context = dict(list(context.items())) + list(c_def.items())
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -33,7 +34,7 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddCardForm
     template_name = 'main/addpage.html'
     success_url = reverse_lazy('main')
-    login_url = reverse_lazy('main') #куда перенаправлять неавторизованных
+    login_url = reverse_lazy('main')  # куда перенаправлять неавторизованных
     raise_exception = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -48,7 +49,7 @@ class ShowCard(DataMixin, DetailView):
     slug_url_kwarg = 'card_slug'
     context_object_name = 'card'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self,  **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['card'].name)
         context['comment'] = Comment.objects.filter(item_card__id=context['card'].pk)
@@ -149,7 +150,7 @@ class ChangeUserInfo(DataMixin, UpdateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class UpdateUser(DataMixin, UpdateView):  #TODO Форма не обрабатывается корректно (вылетает при сохранении)
+class UpdateUser(DataMixin, UpdateView):  # TODO Форма не обрабатывается корректно (вылетает при сохранении)
     form_class = UpdateUser
     model = CustomUser
     template_name = 'main/redact.html'
@@ -169,5 +170,4 @@ def comment(request, card_id):
         text = request.POST["text"]
         new_comment = Comment(text=text, user=request.user, item_card=card)
         new_comment.save()
-
     return redirect('card', card_slug=card.slug)

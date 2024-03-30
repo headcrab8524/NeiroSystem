@@ -47,7 +47,9 @@
     {% else %}
         <label for="exampleFormControlTextarea1" class="form-label">Пожалуйста, <a href="{% url 'login' %}">авторизуйтесь</a>, чтобы оставить комментарий.</label>
     {% endif %}
+    <section>
     {% if comment %}
+
         {% for com in comment %}
             <article class="border border-secondary rounded p-2 mt-3 mb-3 bg-dark">
                 <a href="{% url 'user' com.user.pk %}"
@@ -72,9 +74,9 @@
       {% endfor %}
     {% else %}
     <p>Комментариев пока нет.</p>
+    </section>
     {% endif %}
 
 </div>
-
 
 {% endblock %}
