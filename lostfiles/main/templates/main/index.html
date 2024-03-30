@@ -15,6 +15,9 @@
                     {% for class in itemclass %}
                         <li><a class="dropdown-item" href="{{ class.get_absolute_url }}">{{class.rus_name}}</a></li>
                     {% endfor %}
+                    {% if request.user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'show_marked' %}">Отмеченные</a></li>
+                    {% endif %}
                 </ul>
             </div>
             </div>

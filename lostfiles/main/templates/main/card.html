@@ -34,14 +34,10 @@
     </p>
 
     {% if user_mark %}
-        {% for mark in user_mark %}
-            {% if mark.user.pk == request.user.pk %}
-            <p>Вы уже отметили этот предмет</p>
-            <a href="{% url 'unmark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Удалить отметку</button></a>
-            {% endif %}
-        {% endfor %}
+        <p>Вы уже отметили этот предмет</p>
+        <a href="{% url 'unmark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Удалить отметку</button></a>
     {% else %}
-    <a href="{% url 'mark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button></a>
+        <a href="{% url 'mark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button></a>
     {% endif %}
 
     <hr class="line">

@@ -17,4 +17,5 @@ urlpatterns = [
     path('comment/<int:card_id>', comment, name='comment'),
     path('mark_card/<int:card_id>', mark_card, name='mark_card'),
     path('unmark_card/<int:card_id>', unmark_card, name='unmark_card'),
+    path('marked', ShowMarked.as_view(), name='show_marked'),
 ]

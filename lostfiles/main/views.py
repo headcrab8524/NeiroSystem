@@ -53,7 +53,7 @@ class ShowCard(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['card'].name)
         context['comment'] = Comment.objects.filter(item_card__id=context['card'].pk)
-        context['user_mark'] = UserMark.objects.filter(item_card__id=context['card'].pk)
+        context['user_mark'] = UserMark.objects.filter(item_card__id=context['card'].pk, user=self.request.user)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -186,3 +186,22 @@ def unmark_card(request, card_id):
     mark.delete()
 
     return redirect('card', card_slug=card.slug)
+
+
+class ShowMarked(DataMixin, ListView):
+    paginate_by = 10
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Отмеченные предметы')
+        context['itemclass'] = Class.objects.all()
+        context['marked'] = UserMark.objects.filter(user=self.request.user)
+        context['marked_cards'] = UserMark.objects.values("item_card__pk")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        marked_cards = UserMark.objects.filter(user=self.request.user).values('item_card__pk')
+        return ItemCard.objects.filter(pk__in=marked_cards, status=True).order_by('-time_create')
