@@ -32,7 +32,18 @@
         Возвращен
         {% endif %}
     </p>
-    <button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button>
+
+    {% if user_mark %}
+        {% for mark in user_mark %}
+            {% if mark.user.pk == request.user.pk %}
+            <p>Вы уже отметили этот предмет</p>
+            <a href="{% url 'unmark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Удалить отметку</button></a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    <a href="{% url 'mark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button></a>
+    {% endif %}
+
     <hr class="line">
     <h4>Комментарии</h4>
     {% if request.user.is_authenticated %}
@@ -52,6 +63,7 @@
 
         {% for com in comment %}
             <article class="border border-secondary rounded p-2 mt-3 mb-3 bg-dark">
+                {% if request.user.pk != com.user.pk %}
                 <a href="{% url 'user' com.user.pk %}"
                    class="d-flex align-items-center link-light text-decoration-none mb-3">
                     {% if com.user.photo %}
@@ -68,6 +80,24 @@
                         <div class="">{{ com.time_create }}</div>
                     </div>
                 </a>
+                {% else %}
+                <a href="{% url 'profile' %}"
+                   class="d-flex align-items-center link-light text-decoration-none mb-3">
+                    {% if com.user.photo %}
+                    <div class="profile-photo-comment-2 rounded-circle me-3"
+                         style="background-image: url('{{ com.user.photo.url }}');">
+                    </div>
+                    {% else %}
+                    <div class="profile-photo-comment-2 rounded-circle me-3"
+                         style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}'); ">
+                    </div>
+                    {% endif %}
+                    <div class="d-flex flex-column">
+                        <div class="fs-4">{{ com.user.username }}</div>
+                        <div class="">{{ com.time_create }}</div>
+                    </div>
+                </a>
+                {% endif %}
                 <hr  style="color:white; ">
                 <p class="ps-2 text-light">{{ com.text }}</p>
             </article>

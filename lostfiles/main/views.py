@@ -53,6 +53,7 @@ class ShowCard(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['card'].name)
         context['comment'] = Comment.objects.filter(item_card__id=context['card'].pk)
+        context['user_mark'] = UserMark.objects.filter(item_card__id=context['card'].pk)
         return dict(list(context.items()) + list(c_def.items()))
 
 
@@ -150,18 +151,14 @@ class ChangeUserInfo(DataMixin, UpdateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-class UpdateUser(DataMixin, UpdateView):  # TODO Форма не обрабатывается корректно (вылетает при сохранении)
-    form_class = UpdateUser
-    model = CustomUser
-    template_name = 'main/redact.html'
-    success_url = reverse_lazy('user')
-    pk_url_kwarg = 'user_id'
-    context_object_name = 'user'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Редактирование профиля')
-        return dict(list(context.items()) + list(c_def.items()))
+def update_user(request, user_id): #TODO передать нормально инфу о роли в форме
+    user = CustomUser.objects.get(pk=user_id)
+    if request.method == "POST":
+        role = request.POST["user_role"]
+        user.role.pk = role
+        user.save()
+    return redirect('user', user_id=user_id)
 
 
 def comment(request, card_id):
@@ -170,4 +167,22 @@ def comment(request, card_id):
         text = request.POST["text"]
         new_comment = Comment(text=text, user=request.user, item_card=card)
         new_comment.save()
+    return redirect('card', card_slug=card.slug)
+
+
+def mark_card(request, card_id):
+    card = ItemCard.objects.get(pk=card_id)
+
+    new_mark = UserMark(item_card=card, user=request.user)
+    new_mark.save()
+
+    return redirect('card', card_slug=card.slug)
+
+
+def unmark_card(request, card_id):
+    card = ItemCard.objects.get(pk=card_id)
+    mark = UserMark.objects.get(item_card=card, user=request.user)
+
+    mark.delete()
+
     return redirect('card', card_slug=card.slug)
