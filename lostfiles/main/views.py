@@ -53,7 +53,8 @@ class ShowCard(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['card'].name)
         context['comment'] = Comment.objects.filter(item_card__id=context['card'].pk)
-        context['user_mark'] = UserMark.objects.filter(item_card__id=context['card'].pk, user=self.request.user)
+        if self.request.user.is_authenticated:
+            context['user_mark'] = UserMark.objects.filter(item_card__id=context['card'].pk, user=self.request.user)
         return dict(list(context.items()) + list(c_def.items()))
 
 

@@ -33,11 +33,15 @@
         {% endif %}
     </p>
 
+    {% if request.user.is_authenticated %}
     {% if user_mark %}
         <p>Вы уже отметили этот предмет</p>
         <a href="{% url 'unmark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Удалить отметку</button></a>
     {% else %}
         <a href="{% url 'mark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button></a>
+    {% endif %}
+    {% else %}
+    <p>Чтобы отметить карточку, <a href="{% url 'login' %}">авторизуйтесь.</a></p>
     {% endif %}
 
     <hr class="line">
