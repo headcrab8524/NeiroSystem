@@ -73,6 +73,9 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('role', kwargs={'role_id': self.pk})
+
     class Meta:
         verbose_name = 'Роли'
         verbose_name_plural = 'Роли'
