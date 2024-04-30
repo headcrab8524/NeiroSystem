@@ -45,11 +45,12 @@
         <div class="row bg-secondary border border-dark py-3 mt-2">
           <div class="col-6 text-light"><b>Роль:</b></div>
           {% if request.user.is_authenticated and request.user.role.pk == 1 and user.pk != request.user.pk %}
-          <form action="{% url 'update_user' user.pk %}" method="post">
+          <form action="{% url 'update_user' user.pk %}" method="post" name="user_role" id="user_role">
             {% csrf_token %}
-          <select name="user_role" id="user-groups-select" class="form-select form-select-sm w-25">
-            <option value="2">Пользователь</option>
-            <option value="1">Администратор</option>
+          <select name="role_select" id="user-groups-select" class="form-select form-select-sm w-25">
+            {% for role in roles %}
+              <option class="text-dark" value="{{ role.pk }}">{{ role.name }}</option>
+            {% endfor %}
           </select>
             </form>
           {% else %}
@@ -74,7 +75,7 @@
     </div>
   </div>
   {% if request.user.role.pk == 1 %}
-  <button type="submit" class="btn btn-secondary"><a class="link-light link-underline link-underline-opacity-0" href="{% url 'update_user' user.pk %}">Сохранить изменения</a></button>
+  <button type="submit" form="user_role" class="btn btn-secondary">Сохранить изменения</button>
   {% endif %}
 </section>
 {% else %}

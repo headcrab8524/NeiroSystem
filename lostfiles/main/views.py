@@ -23,7 +23,6 @@ class MainHome(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Главная страница')
         context['itemclass'] = Class.objects.all()
-        # context = dict(list(context.items())) + list(c_def.items())
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
@@ -118,6 +117,7 @@ class UserProfile(DataMixin, DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['roles'] = Role.objects.all()
         c_def = self.get_user_context(title="Профиль")
         return dict(list(context.items()) + list(c_def.items()))
 
@@ -152,13 +152,11 @@ class ChangeUserInfo(DataMixin, UpdateView):
         return dict(list(context.items()) + list(c_def.items()))
 
 
-
-def update_user(request, user_id): #TODO передать нормально инфу о роли в форме
+def update_user(request, user_id):
     user = CustomUser.objects.get(pk=user_id)
-    if request.method == "POST":
-        role = request.POST["user_role"]
-        user.role.pk = role
-        user.save()
+    role = request.POST.get('role_select', None)
+    user.role = Role.objects.get(pk=role)
+    user.save()
     return redirect('user', user_id=user_id)
 
 
