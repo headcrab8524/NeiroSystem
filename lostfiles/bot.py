@@ -15,13 +15,14 @@ card_id = None
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, "Дарова")
     markup = types.ReplyKeyboardMarkup()
     btn1 = types.KeyboardButton('Просмотр списка записей')
     markup.row(btn1)
     btn2 = types.KeyboardButton('Добавление описания')
     btn3 = types.KeyboardButton('Удаление записи')
     markup.row(btn2, btn3)
+    bot.send_message(message.chat.id, "Дарова", reply_markup=markup)
+    bot.register_next_step_handler(message, on_click)
 
 
 @bot.message_handler(commands=['show_list'])
@@ -35,7 +36,7 @@ def show_list(message):
 
     info = ''
     for el in cards:
-        info += f'{el[0]}) Название: {el[1]}\nВремя нахождения: {el[4]}\nМесто нахождения: {el[5]}\n\n'
+        info += f'{el[0]}) Название: {el[1]}\nВремя нахождения: {el[4]}\nМесто нахождения: {el[5]}\nОписание: {el[6]}\n\n'
 
     cur.close()
     conn.close()
@@ -85,7 +86,7 @@ def update_content(message):
 
 @bot.message_handler(commands=['refresh'])
 def new_post(message):
-    path = 'data.json'
+    path = 'E330.json'
 
     with open(path, 'r') as f:
         data = json.loads(f.read())
@@ -93,12 +94,13 @@ def new_post(message):
         global name, time, aud, photo
 
         name = data[0]['item_name']
+        #TODO формат времени без тире и говна всякого
         time = data[0]['date']
         aud = data[0]['aud']
 
         bot.send_message(message.chat.id, 'Информация о нахождении:')
 
-        photo = open(f'./{data[0]['img_path']}', 'rb')
+        photo = open(f'./{data[0]["img_path"]}', 'rb')
         bot.send_photo(message.chat.id, photo)
         bot.send_message(message.chat.id,
                          f'Название: {name}\nВремя нахождения: {time}\nМесто нахождения: {aud} \n')
@@ -118,8 +120,12 @@ def callback_message(callback):
         conn = sqlite3.connect('db.sqlite3')
         cur = conn.cursor()
         cur.execute(f"SELECT id FROM main_class WHERE name='{name}'")
+
         class_id = cur.fetchall()[0][0]
-        cur.execute(f"INSERT INTO main_itemcard (name, slug, photo, time_found, place_found, content, time_create, status, item_class_id, resp_user_id) VALUES ('{name}', '{name + str(time)}', '{photo}', '{time}', '{aud}', NULL, {date.today()}, 1, '{class_id}', 1)")
+        time_create = str(datetime.now())
+
+        #TODO слаг без двоеточий, контент чтоб не None а не добавлено был
+        cur.execute(f"INSERT INTO main_itemcard (name, slug, photo, time_found, place_found, content, status, item_class_id, resp_user_id) VALUES ('{name}', '{name + str(time)}', '{photo}', '{time}', '{aud}', NULL, 1, '{class_id}', 1)")
         conn.commit()
         cur.close()
         conn.close()
@@ -128,6 +134,17 @@ def callback_message(callback):
     elif callback.data == 'no_add':
         #TODO очищать ненужные данные
         bot.reply_to(callback.message.chat.id, "Запись не была добавлена.")
+
+
+@bot.message_handler(content_types=['text'])
+#TODO кнопки не должны прожиматься пока другие отрабатывают
+def on_click(message):
+    if message.text == 'Просмотр списка записей':
+        show_list(message)
+    elif message.text == 'Добавление описания':
+        add_content(message)
+    elif message.text == 'Удаление записи':
+        delete_post(message)
 
 
 bot.polling(none_stop=True)
