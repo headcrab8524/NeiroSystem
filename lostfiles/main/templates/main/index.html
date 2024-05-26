@@ -34,7 +34,7 @@
             <p class="last">Дата: {{card.time_create}}</p>
         </div>
             {% if card.photo %}
-            <p class="mt-4" style="padding-left: 30%;"><img class="img-article-left thumb"  src="{{card.photo.url}}"></p>
+            <p class="mt-4" style="padding-left: 30%;"><img class="img-article-left rounded-4  thumb img-thumbnail" src="{{card.photo.url}}"></p>
             {% endif %}
             <hr>
             <h5 class="card-entry">{{card.name}}</h5>
