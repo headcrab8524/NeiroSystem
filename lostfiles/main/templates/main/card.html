@@ -99,7 +99,10 @@
                 </a>
                 {% endif %}
                 <hr  style="color:white; ">
-                <p class="ps-2 text-light">{{ com.text }}</p>
+                <div class="text-light"><p class="ps-2">{{ com.text|linebreaks }}</p></div>
+                {%if request.user.pk == com.user.pk%}
+                <button class="btn btn-secondary">Удалить комментарий</button>
+                {% endif %}
             </article>
       {% endfor %}
     {% else %}

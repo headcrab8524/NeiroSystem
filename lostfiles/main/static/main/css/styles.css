@@ -27,6 +27,7 @@ img {max-width: 600px; height: auto;}
 img.img-article-left {
 	max-width: 300px;
 	height: auto;
+	margin-top: 5px;
 	float: left;
 	padding: 0 10px 10px 0;
 }
