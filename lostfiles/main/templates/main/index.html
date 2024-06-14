@@ -30,11 +30,10 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                             <li><a class="dropdown-item" href="{% url 'main' %}">Без времени</a></li>
-                            <li><a class="dropdown-item" href="{% url '#' %}">24 часа</a></li>
-                            <li><a class="dropdown-item" href="{% url '#' %}">7 дней</a></li>
-                            <li><a class="dropdown-item" href="{% url '#' %}">30 дней</a></li>
-                            <li><a class="dropdown-item" href="{% url '#' %}">6 месяцев</a></li>
-                            <li><a class="dropdown-item" href="{% url '#' %}">1 год</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_by_day' %}">За день</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_by_week' %}">За неделю</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_by_month' %}">За месяц</a></li>
+                            <li><a class="dropdown-item" href="{% url 'show_by_half_year' %}">За полгода</a></li>
                         </ul>
                     </div>
             </div>

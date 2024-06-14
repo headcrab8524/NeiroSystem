@@ -105,4 +105,3 @@ class Location(models.Model):
         verbose_name = 'Места нахождения'
         verbose_name_plural = 'Места нахождения'
         ordering = ['id']
-

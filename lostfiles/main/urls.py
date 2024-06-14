@@ -18,6 +18,10 @@ urlpatterns = [
     path('mark_card/<int:card_id>', mark_card, name='mark_card'),
     path('unmark_card/<int:card_id>', unmark_card, name='unmark_card'),
     path('marked/', ShowMarked.as_view(), name='show_marked'),
-    path('show_by_time', ShowByTime.as_view(), name='show_by_time'),
     path('delete_comment/<int:card_id>', delete_comment, name='delete_comment'),
+    path('show_by_day', ShowByDay.as_view(), name='show_by_day'),
+    path('show_by_week', ShowByWeek.as_view(), name='show_by_week'),
+    path('show_by_month', ShowByMonth.as_view(), name='show_by_month'),
+    path('show_by_half_year', ShowByHalfYear.as_view(), name='show_by_half_year'),
+    path('delete_card/<int:card_id>', delete_card, name='delete_card'),
 ]

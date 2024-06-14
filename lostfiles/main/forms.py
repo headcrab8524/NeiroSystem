@@ -13,10 +13,11 @@ class AddCardForm(forms.ModelForm):
 
     class Meta:
         model = ItemCard
-        fields = ['name', 'slug', 'item_class', 'photo', 'content']
+        fields = ['name', 'slug', 'item_class', 'time_found', 'place_found', 'photo', 'content']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-input'}),
             'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+            'time_found': forms.TextInput(attrs={'type': 'date'})
         }
 
     def clean_name(self):

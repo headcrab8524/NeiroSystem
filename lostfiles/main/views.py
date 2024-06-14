@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import *
 from .utils import *
+import datetime
+import timedelta
 
 
 class MainHome(DataMixin, ListView):
@@ -213,7 +215,7 @@ def delete_comment(request, card_id):
     return redirect('card', card_slug=card.slug)
 
 
-class ShowByTime(DataMixin, ListView):
+class ShowByDay(DataMixin, ListView):
     paginate_by = 10
     model = ItemCard
     template_name = 'main/index.html'
@@ -222,9 +224,64 @@ class ShowByTime(DataMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title='Фильтр по дате')
-        if self.request.method == "POST":
-            context['time_search'] = self.request.POST['date']
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return ItemCard.objects.filter(time_found__gte=self.kwargs['time_search'], status=True).order_by('-time_create')
+        return ItemCard.objects.filter(time_found__gte=datetime.datetime.now() - datetime.timedelta(days=1),
+                                       time_found__lte=datetime.datetime.now(), status=True).order_by('-time_create')
+
+
+class ShowByWeek(DataMixin, ListView):
+    paginate_by = 10
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Фильтр по дате')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return ItemCard.objects.filter(time_found__gte=datetime.datetime.now() - datetime.timedelta(days=7),
+                                       time_found__lte=datetime.datetime.now(), status=True).order_by('-time_create')
+
+
+class ShowByMonth(DataMixin, ListView):
+    paginate_by = 10
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Фильтр по дате')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return ItemCard.objects.filter(time_found__gte=datetime.datetime.now() - datetime.timedelta(days=30),
+                                       time_found__lte=datetime.datetime.now(), status=True).order_by('-time_create')
+
+
+class ShowByHalfYear(DataMixin, ListView):
+    paginate_by = 10
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Фильтр по дате')
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return ItemCard.objects.filter(time_found__gte=datetime.datetime.now() - datetime.timedelta(days=180),
+                                       time_found__lte=datetime.datetime.now(), status=True).order_by('-time_create')
+
+
+def delete_card(request, card_id):
+    card = ItemCard.objects.get(pk=card_id)
+
+    card.delete()
+
+    return redirect('main')
