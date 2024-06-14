@@ -3,6 +3,8 @@ from telebot import types
 import sqlite3
 import json
 from datetime import date, datetime
+import os
+import shutil
 
 bot = telebot.TeleBot('6956940513:AAF9iUMSw9Q-PiSd9R3KLF3JJ-AOZ2XIM1Y')
 
@@ -11,23 +13,35 @@ time = None
 aud = None
 photo = None
 card_id = None
+save_path = None
+img_path_data = None
+source_path = None
+
+markup = types.ReplyKeyboardMarkup()
+btn1 = types.KeyboardButton('Просмотр списка записей')
+markup.row(btn1)
+btn2 = types.KeyboardButton('Добавление описания')
+btn3 = types.KeyboardButton('Удаление записи')
+markup.row(btn2, btn3)
 
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = types.ReplyKeyboardMarkup()
-    btn1 = types.KeyboardButton('Просмотр списка записей')
-    markup.row(btn1)
-    btn2 = types.KeyboardButton('Добавление описания')
-    btn3 = types.KeyboardButton('Удаление записи')
-    markup.row(btn2, btn3)
+    #TODO оставлять ответственному только его jsonы
     bot.send_message(message.chat.id, "Дарова", reply_markup=markup)
     bot.register_next_step_handler(message, on_click)
 
 
+@bot.message_handler(commands=['info'])
+def show_info(message):
+    # TODO выводить информацию об ответственном лице (его кафедра, аудитории). Пока тут тестим message
+    bot.send_message(message.chat.id, message)
+
+
 @bot.message_handler(commands=['show_list'])
 def show_list(message):
-    bot.send_message(message.chat.id, "Список потерянных предметов, занесённых в базу данных:")
+    bot.send_message(message.chat.id, "Список потерянных предметов, занесённых в базу данных:",
+                     reply_markup=types.ReplyKeyboardRemove())
 
     conn = sqlite3.connect('db.sqlite3')
     cur = conn.cursor()
@@ -40,12 +54,13 @@ def show_list(message):
 
     cur.close()
     conn.close()
-    bot.send_message(message.chat.id, info)
+    bot.send_message(message.chat.id, info, reply_markup=markup)
 
 
 @bot.message_handler(commands=['delete'])
 def delete_post(message):
-    bot.send_message(message.chat.id, "Выберите номер записи, которую хотите удалить")
+    bot.send_message(message.chat.id, "Выберите номер записи, которую хотите удалить",
+                     reply_markup=types.ReplyKeyboardRemove())
     bot.register_next_step_handler(message, delete_by_id)
 
 
@@ -57,12 +72,13 @@ def delete_by_id(message):
     conn.commit()
     cur.close()
     conn.close()
-    bot.send_message(message.chat.id, "Запись успешно удалена.")
+    bot.send_message(message.chat.id, "Запись успешно удалена.", reply_markup=markup)
 
 
 @bot.message_handler(commands=['add_content'])
 def add_content(message):
-    bot.send_message(message.chat.id, "Выберите номер записи, которую хотите изменить")
+    bot.send_message(message.chat.id, "Выберите номер записи, которую хотите изменить",
+                     reply_markup=types.ReplyKeyboardRemove())
     bot.register_next_step_handler(message, update_by_id)
 
 
@@ -81,7 +97,7 @@ def update_content(message):
     conn.commit()
     cur.close()
     conn.close()
-    bot.send_message(message.chat.id, "Запись успешно обновлена.")
+    bot.send_message(message.chat.id, "Запись успешно обновлена.", reply_markup=markup)
 
 
 @bot.message_handler(commands=['refresh'])
@@ -91,53 +107,62 @@ def new_post(message):
     with open(path, 'r') as f:
         data = json.loads(f.read())
 
-        global name, time, aud, photo
+    global name, time, aud, photo, save_path, img_path_data, source_path
 
-        name = data[0]['item_name']
-        #TODO формат времени без тире и говна всякого
-        time = data[0]['date']
-        aud = data[0]['aud']
+    name = data[0]['item_name']
+    time = data[0]['date']
+    aud = data[0]['aud']
+    img_path_data = data[0]["img_path"].split("-")
 
-        bot.send_message(message.chat.id, 'Информация о нахождении:')
+    bot.send_message(message.chat.id, 'Информация о нахождении:')
 
-        photo = open(f'./{data[0]["img_path"]}', 'rb')
-        bot.send_photo(message.chat.id, photo)
-        bot.send_message(message.chat.id,
-                         f'Название: {name}\nВремя нахождения: {time}\nМесто нахождения: {aud} \n')
+    photo = open(f'./{data[0]["img_path"]}', 'rb')
+    bot.send_photo(message.chat.id, photo)
+    bot.send_message(message.chat.id,
+                         f'Класс предмета: {name}\nВремя нахождения: {time}\nМесто нахождения: {aud} \n')
 
-        photo = data[0]['img_path']
+    photo = f'./{data[0]["img_path"]}'
+    source_path = f'{data[0]["img_path"]}'
 
-        markup = types.InlineKeyboardMarkup()
-        btn1 = types.InlineKeyboardButton('Добавить запись', callback_data='add_post')
-        btn2 = types.InlineKeyboardButton('Не добавлять', callback_data='no_add')
-        markup.row(btn1, btn2)
-        bot.send_message(message.chat.id,"Выберите дальнейшее действие:", reply_markup=markup)
+    inline_markup = types.InlineKeyboardMarkup()
+    button1 = types.InlineKeyboardButton('Добавить запись', callback_data='add_post')
+    button2 = types.InlineKeyboardButton('Не добавлять', callback_data='no_add')
+    inline_markup.row(button1, button2)
+    bot.send_message(message.chat.id, "Выберите дальнейшее действие:", reply_markup=inline_markup)
 
 
 @bot.callback_query_handler(func=lambda callback: True)
 def callback_message(callback):
+    global source_path
     if callback.data == 'add_post':
+
         conn = sqlite3.connect('db.sqlite3')
         cur = conn.cursor()
-        cur.execute(f"SELECT id FROM main_class WHERE name='{name}'")
+        cur.execute(f"SELECT id, rus_name FROM main_class WHERE name='{name}'")
 
-        class_id = cur.fetchall()[0][0]
-        time_create = str(datetime.now())
+        info = cur.fetchall()
+        class_id = info[0][0]
+        rus_name = info[0][1]
 
-        #TODO слаг без двоеточий, контент чтоб не None а не добавлено был
-        cur.execute(f"INSERT INTO main_itemcard (name, slug, photo, time_found, place_found, content, status, item_class_id, resp_user_id) VALUES ('{name}', '{name + str(time)}', '{photo}', '{time}', '{aud}', NULL, 1, '{class_id}', 1)")
+        destination_path = f"./media/photos/{img_path_data[0]}/{img_path_data[1]}/{img_path_data[2]}/"
+        save_path = destination_path.replace('./media/', '') + str(source_path)
+
+        cur.execute(f"INSERT INTO main_itemcard (name, slug, photo, time_found, place_found, content, status, item_class_id, resp_user_id) VALUES ('{rus_name}', '{name + str(time).replace(':', '-')}', '{save_path}', '{time}', '{aud}', 'Не добавлено', 1, '{class_id}', 1)")
         conn.commit()
         cur.close()
         conn.close()
-        bot.send_message(callback.message.chat.id, "Запись успешно добавлена.")
-        #TODO кнопка не отжимается
+
+        if not os.path.exists(destination_path):
+            os.makedirs(destination_path, exist_ok=True)
+        shutil.move(source_path, destination_path)
+
+        bot.send_message(callback.message.chat.id, "Запись успешно добавлена.", reply_markup=markup)
     elif callback.data == 'no_add':
         #TODO очищать ненужные данные
-        bot.reply_to(callback.message.chat.id, "Запись не была добавлена.")
+        bot.send_message(callback.message.chat.id, "Запись не была добавлена.", reply_markup=markup)
 
 
 @bot.message_handler(content_types=['text'])
-#TODO кнопки не должны прожиматься пока другие отрабатывают
 def on_click(message):
     if message.text == 'Просмотр списка записей':
         show_list(message)
