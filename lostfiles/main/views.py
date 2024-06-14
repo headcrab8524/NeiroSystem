@@ -202,3 +202,29 @@ class ShowMarked(DataMixin, ListView):
     def get_queryset(self):
         marked_cards = UserMark.objects.filter(user=self.request.user).values('item_card__pk')
         return ItemCard.objects.filter(pk__in=marked_cards, status=True).order_by('-time_create')
+
+
+def delete_comment(request, card_id):
+    card = ItemCard.objects.get(pk=card_id)
+    comment = Comment.objects.get(item_card=card, user=request.user)
+
+    comment.delete()
+
+    return redirect('card', card_slug=card.slug)
+
+
+class ShowByTime(DataMixin, ListView):
+    paginate_by = 10
+    model = ItemCard
+    template_name = 'main/index.html'
+    context_object_name = 'cards'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Фильтр по дате')
+        if self.request.method == "POST":
+            context['time_search'] = self.request.POST['date']
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        return ItemCard.objects.filter(time_found__gte=self.kwargs['time_search'], status=True).order_by('-time_create')

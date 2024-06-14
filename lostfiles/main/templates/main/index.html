@@ -25,9 +25,11 @@
                 </ul>
             </div>
                     <div class = "ms-2">
-                        <div class = "col-sm-12" align = "center">
-                            <input class="form-control" type = "date" name = "date" placeholder="Найдена после" >
-                        </div>
+                        <form action="{% url 'show_by_time' %}" method="post" name="show_by_time" id="show_by_time">
+                            {% csrf_token %}
+                            <input class="form-control" type="date" name="date" placeholder="Найдена после">
+                            <a href="{% url 'show_by_time' %}"><button type="submit" form="show_by_time" class="btn btn-outline-secondary">Фильтровать</button></a>
+                        </form>
                     </div>
             </div>
         </td>
