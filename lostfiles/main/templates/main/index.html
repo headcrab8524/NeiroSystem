@@ -24,12 +24,18 @@
                     {% endif %}
                 </ul>
             </div>
-                    <div class = "ms-2">
-                        <form action="{% url 'show_by_time' %}" method="post" name="show_by_time" id="show_by_time">
-                            {% csrf_token %}
-                            <input class="form-control" type="date" name="date" placeholder="Найдена после">
-                            <a href="{% url 'show_by_time' %}"><button type="submit" form="show_by_time" class="btn btn-outline-secondary">Фильтровать</button></a>
-                        </form>
+                    <div class="dropdown mb-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Времени
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                            <li><a class="dropdown-item" href="{% url 'main' %}">Без времени</a></li>
+                            <li><a class="dropdown-item" href="{% url '#' %}">24 часа</a></li>
+                            <li><a class="dropdown-item" href="{% url '#' %}">7 дней</a></li>
+                            <li><a class="dropdown-item" href="{% url '#' %}">30 дней</a></li>
+                            <li><a class="dropdown-item" href="{% url '#' %}">6 месяцев</a></li>
+                            <li><a class="dropdown-item" href="{% url '#' %}">1 год</a></li>
+                        </ul>
                     </div>
             </div>
         </td>
