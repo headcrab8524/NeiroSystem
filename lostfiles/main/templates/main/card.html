@@ -20,7 +20,7 @@
     <p class="d-block mx-auto"><img class="card-img img-fluid rounded img-thumbnail" src="{{card.photo.url}}"></p>
 {% endif %}
     {% if request.user.role.pk == 1 %}
-    <a href="{% url 'delete_card' card.pk %}"><button type="submit" class="btn btn-secondary">Удалить карточку</button></a>
+    <a href="{% url 'delete_card' card.pk %}"><button type="submit" class="btn btn-outline-secondary">Удалить карточку</button></a>
     {% endif %}
     <hr class="line">
     <h4>Описание</h4>
