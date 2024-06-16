@@ -206,9 +206,9 @@ class ShowMarked(DataMixin, ListView):
         return ItemCard.objects.filter(pk__in=marked_cards, status=True).order_by('-time_create')
 
 
-def delete_comment(request, card_id):
+def delete_comment(request, card_id, comment_id):
     card = ItemCard.objects.get(pk=card_id)
-    comment = Comment.objects.get(item_card=card, user=request.user)
+    comment = Comment.objects.get(pk=comment_id, item_card=card, user=request.user)
 
     comment.delete()
 

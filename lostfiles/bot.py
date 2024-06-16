@@ -31,15 +31,8 @@ markup.row(btn4)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    #TODO оставлять ответственному только его jsonы
-    bot.send_message(message.chat.id, "Дарова", reply_markup=markup)
+    bot.send_message(message.chat.id, "Добрый день.", reply_markup=markup)
     bot.register_next_step_handler(message, on_click)
-
-
-@bot.message_handler(commands=['info'])
-def show_info(message):
-    # TODO выводить информацию об ответственном лице (его кафедра, аудитории). Пока тут тестим message
-    bot.send_message(message.chat.id, message)
 
 
 @bot.message_handler(commands=['show_list'])
@@ -114,19 +107,25 @@ def change_status(message):
 def update_status_by_id(message):
     global card_id
     card_id = message.text
-    bot.send_message(message.chat.id, "Задайте статус")
-    bot.register_next_step_handler(message, update_status)
 
-
-def update_status(message):
-    status = message.text
     conn = sqlite3.connect('db.sqlite3')
     cur = conn.cursor()
+
+    cur.execute(f"SELECT status FROM main_itemcard WHERE id='{card_id}'")
+
+    info = cur.fetchall()
+    status = info[0][0]
+
+    if status == 1:
+        status = 0
+    else:
+        status = 1
+
     cur.execute(f"UPDATE main_itemcard SET status='{status}' WHERE id='{card_id}'")
     conn.commit()
     cur.close()
     conn.close()
-    bot.send_message(message.chat.id, "Запись успешно обновлена.", reply_markup=markup)
+    bot.send_message(message.chat.id, "Статус записи успешно обновлен.", reply_markup=markup)
 
 
 @bot.message_handler(commands=['refresh'])

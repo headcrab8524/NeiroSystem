@@ -104,7 +104,7 @@
                 <hr  style="color:white; ">
                 <div class="text-light"><p class="ps-2">{{ com.text|linebreaks }}</p></div>
                 {%if request.user.pk == com.user.pk%}
-                <a href="{% url 'delete_comment' card.pk %}"><button class="btn btn-secondary">Удалить комментарий</button></a>
+                <a href="{% url 'delete_comment' card.pk com.pk %}"><button class="btn btn-secondary">Удалить комментарий</button></a>
                 {% endif %}
             </article>
       {% endfor %}
