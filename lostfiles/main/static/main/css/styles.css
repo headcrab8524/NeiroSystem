@@ -97,6 +97,32 @@ ul.list-articles li {
   .card-list .card {
     width: 90%;
   }
+  p,b,span,a,label {
+    font-size: x-large;
+  }
+  span{
+  margin-top: 5px;
+  }
+  h4{
+   font-size: xx-large;
+  }
+  #logo {
+      margin-left 10px;
+      width:200px;
+      height: 90px;
+  }
+  .card-entry{
+    padding-left: 20px;
+    font-size: xx-large;
+  }
+  #dropdownMenuButton1, #dropdownMenuButton2, #but1, #but2, #but3, #but4, #butn {
+    font-size: x-large;
+  }
+
+
+
+
+
 }
 .card-img{
     max-height: 500px;
@@ -216,6 +242,7 @@ header {
 }
 .profile-photo-header {
   width: 2.5em;
+  margin-top:8px;
   padding-bottom: 2.5em;
   background-size: cover;
   background-position: center center;

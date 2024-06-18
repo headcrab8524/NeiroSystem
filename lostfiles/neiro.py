@@ -60,6 +60,7 @@ def neiro_work(model):  # Метод работы нейросети
         text_thickness=2,
         text_scale=1
     )
+    cap.read()
     time.sleep(10)
     ret, frame = cap.read()  # Возращаем кадр
     result = model(frame)[0]  # Обрабатывакм кадр

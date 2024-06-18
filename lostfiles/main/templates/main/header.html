@@ -1,7 +1,7 @@
 {% load static %}
     <header class="p-3 bg-dark text-white">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-between ">
+            <div class="d-flex flex-wrap align-items-center justify-content-between " >
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <img id="logo"  src="{% static 'main/images/kgynewlogo.png' %}">
                 </a>
@@ -10,22 +10,21 @@
                     {% if request.user.is_authenticated %}
                     <div class="d-flex" >
                         {% if request.user.photo %}
-                        <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header rounded-circle"
+                        <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header  rounded-circle"
                              style="background-image: url('{{request.user.photo.url}}');">
                         </div>
                         </a>
                         {% else %}
 
-                        <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header rounded-circle"
+                        <a href="{% url 'profile' %}" class="ms-2"><div class="profile-photo-header mt-1 rounded-circle"
                              style="background-image: url('{% static 'main/images/defaultprof.jpeg' %}');">
                         </div>
                         </a>
                         {% endif %}
-                        <a class="link-light mt-2 link-underline link-underline-opacity-0" href="{% url 'profile' %}"><span class="ms-2 mt-10">{{ request.user.username }}</span></a>
-                    </div>
+
                     <div class="dropdown mt-2">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Дополнительные опции
+                            {{ request.user.username }}
                         </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="{% url 'profile' %}">Перейти в профиль</a></li>
@@ -35,6 +34,7 @@
                         <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
 
                     </ul>
+                    </div>
                         <div>
                     {% else %}
                     <a  class="link-light" href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2 "> Авторизоваться</button></a>

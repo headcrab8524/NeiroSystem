@@ -7,7 +7,7 @@
             <nav aria-label="breadcrumb" class="ms-2">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a class="link-secondary" href="{% url 'main' %}">Главная страница</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+                    <li class="breadcrumb-item active" aria-current="page"><a>{{title}}</a> </li>
                 </ol>
             </nav>
         </td>
@@ -20,7 +20,7 @@
     <p class="d-block mx-auto"><img class="card-img img-fluid rounded img-thumbnail" src="{{card.photo.url}}"></p>
 {% endif %}
     {% if request.user.role.pk == 1 %}
-    <a href="{% url 'delete_card' card.pk %}"><button type="submit" class="btn btn-outline-secondary">Удалить карточку</button></a>
+    <a href="{% url 'delete_card' card.pk %}"><button id="but1" type="submit" class="btn btn-outline-secondary">Удалить карточку</button></a>
     {% endif %}
     <hr class="line">
     <h4>Описание</h4>
@@ -39,9 +39,9 @@
     {% if request.user.is_authenticated %}
     {% if user_mark %}
         <p>Вы уже отметили этот предмет</p>
-        <a href="{% url 'unmark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Удалить отметку</button></a>
+        <a href="{% url 'unmark_card' card.pk %}"><button id="but2" type="button" class="btn btn-outline-secondary mb-2"> Удалить отметку</button></a>
     {% else %}
-        <a href="{% url 'mark_card' card.pk %}"><button type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button></a>
+        <a href="{% url 'mark_card' card.pk %}"><button id="but3" type="button" class="btn btn-outline-secondary mb-2"> Отметить предмет</button></a>
     {% endif %}
     {% else %}
     <p>Чтобы отметить карточку, <a href="{% url 'login' %}">авторизуйтесь.</a></p>
@@ -55,7 +55,7 @@
         <form action="{% url 'comment' card.pk %}" method="post">
             {% csrf_token %}
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="text"></textarea>
-        <a href="{% url 'comment' card.pk %}"><button type="submit" class="btn btn-outline-secondary"> Добавить комментарий</button></a>
+        <a href="{% url 'comment' card.pk %}"><button id="but4" type="submit" class="btn btn-outline-secondary"> Добавить комментарий</button></a>
         </form>
     </div>
     {% else %}
@@ -104,7 +104,7 @@
                 <hr  style="color:white; ">
                 <div class="text-light"><p class="ps-2">{{ com.text|linebreaks }}</p></div>
                 {%if request.user.pk == com.user.pk%}
-                <a href="{% url 'delete_comment' card.pk com.pk %}"><button class="btn btn-secondary">Удалить комментарий</button></a>
+                <a href="{% url 'delete_comment' card.pk com.pk %}"><button id="butn" class="btn btn-secondary">Удалить комментарий</button></a>
                 {% endif %}
             </article>
       {% endfor %}
