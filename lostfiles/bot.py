@@ -131,7 +131,7 @@ def update_status_by_id(message):
 @bot.message_handler(commands=['refresh'])
 def new_post(message):
     global wait
-    path = 'data.json'
+    path = 'E330.json'
 
     with open(path, 'r') as f:
         data = json.loads(f.read())
@@ -140,20 +140,20 @@ def new_post(message):
 
     for el in data:
         wait = True
-        name = el[0]['item_name']
-        time = el[0]['date']
-        aud = el[0]['aud']
-        img_path_data = el[0]["img_path"].split("-")
+        name = el['item_name']
+        time = el['date']
+        aud = el['aud']
+        img_path_data = el["img_path"].split("-")
 
         bot.send_message(message.chat.id, 'Информация о нахождении:')
 
-        photo = open(f'./{el[0]["img_path"]}', 'rb')
+        photo = open(f'./{el["img_path"]}', 'rb')
         bot.send_photo(message.chat.id, photo)
         bot.send_message(message.chat.id,
                              f'Класс предмета: {name}\nВремя нахождения: {time}\nМесто нахождения: {aud} \n')
 
-        photo = f'./{el[0]["img_path"]}'
-        source_path = f'{el[0]["img_path"]}'
+        photo = f'./{el["img_path"]}'
+        source_path = f'{el["img_path"]}'
 
         inline_markup = types.InlineKeyboardMarkup()
         button1 = types.InlineKeyboardButton('Добавить запись', callback_data='add_post')
