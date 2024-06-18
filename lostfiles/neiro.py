@@ -8,7 +8,7 @@ from datetime import date, datetime
 import json
 import configparser
 
-dir_path = "..\django\lostfiles"
+dir_path = "../diplom_project/lostfiles"
 
 
 def main():
@@ -43,7 +43,7 @@ def the_time_has_come(model,  kor_aud):
                          "date": str(date.today()) + "-" + current_time,  # Дата нахождение
                          "aud": kor_aud,  # Аудитория и корпус
                          })
-            with open(f"{dir_path}\{kor_aud}.json", "w") as file:  # Открываем json файл в следующем пути
+            with open(f"{dir_path}/{kor_aud}.json", "w") as file:  # Открываем json файл в следующем пути
                 json.dump(data, file)  # Записываем нашу дату
 
 def neiro_work(model):  # Метод работы нейросети
@@ -75,7 +75,7 @@ def neiro_work(model):  # Метод работы нейросети
     detections = sv.Detections.from_ultralytics(result)  # Собираем наши обнаружения
     frame = BoundingBoxAnnotator.annotate(scene=frame, detections=detections)  # Рисуем на кадре наши рамки
     frame = LabelAnnotator.annotate(scene=frame, detections=detections)  # Подписываем на рисунке наши рамки
-    cv2.imwrite(f"{dir_path}\{img_name}", frame)  # Записываем нашу картинку по следующему пути
+    cv2.imwrite(f"{dir_path}/{img_name}", frame)  # Записываем нашу картинку по следующему пути
     return img_name, modelnames  # Возвращаем название картинки и название обнаружений
 
 
